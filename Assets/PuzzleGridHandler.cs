@@ -16,320 +16,335 @@ using UnityEngine.UI;
  * 
  */
 
-public class PuzzleGridHandler : MonoBehaviour
+namespace GridHandler
 {
-    // public string[,] setup = { { "soil", "soil", "soil" } };
-
-    public int height = 1;
-    public int width = 3;
-    public float gridX = 0.0f;
-    public float gridY = 0.0f;
-
-    Grid grid;
-    float tileSize = 1.921f; // size of each tile in the grid
-
-    GameObject player;
-
-    [Header("Prefabs")]
-    public GameObject fertileSoil;
-    public GameObject moonglow;
-    public GameObject starleafTree;
-
-    Dictionary<string, Plant> plantRef; // plant name -> plant object
-
-
-    private Transform location;
-
-    private GameObject[,] tiles;
-    private GameObject[,] plants;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public class PuzzleGridHandler : MonoBehaviour
     {
-        grid = new Grid(height, width);
+        // public string[,] setup = { { "soil", "soil", "soil" } };
 
-        // instantiate the tile grid to match the data grid
-        tiles = new GameObject[height, width];
-        plants = new GameObject[height, width];
+        public int height = 1;
+        public int width = 3;
 
-        // Get the location of this gamebobect
-        location = this.transform;
+        Grid grid;
+        float tileSize = 1.921f; // size of each tile in the grid
 
-        // Instantiate a grid of soil made up of the fertileSoil prefab
-        for (int i = 0; i < height; i++)
+        GameObject player;
+
+        [Header("Prefabs")]
+        public GameObject fertileSoil;
+        public GameObject moonglow;
+        public GameObject starleafTree;
+
+        Dictionary<string, Plant> plantRef; // plant name -> plant object
+
+
+        private Transform location;
+
+        private GameObject[,] tiles;
+        private GameObject[,] plants;
+
+
+        // Start is called before the first frame update
+        void Start()
         {
-            for (int j = 0; j < width; j++)
+            grid = new Grid(height, width);
+
+            // instantiate the tile grid to match the data grid
+            tiles = new GameObject[height, width];
+            plants = new GameObject[height, width];
+
+            // Get the location of this gamebobect
+            location = this.transform;
+
+            // Instantiate a grid of soil made up of the fertileSoil prefab
+            for (int i = 0; i < height; i++)
             {
-                tiles[i,j] = Instantiate(fertileSoil, new Vector3(this.transform.position.x + j * tileSize, this.transform.position.y + i * tileSize, 0), Quaternion.identity);
-            }
-        }
-
-        if (player == null)
-        {
-            player = GameObject.Find("Player");
-        }
-
-        plantRef = definePlants();
-
-        runTest();
-
-    }
-
-    // Define the names and types of all plants that can be placed on the grid
-    private Dictionary<string, Plant> definePlants()
-    {
-        plantRef = new Dictionary<string, Plant>();
-        plantRef.Add("moonglow", new Plant("moonglow", "bush"));
-        plantRef.Add("starleaf tree", new Plant("starleaf tree", "tree"));
-
-        return plantRef;
-    }
-
-    // Checks to see that the grid initializes correctly and that the CalculateMana function works
-    private void runTest()
-    {
-        Debug.Log("Debug Tile (should be soil): " + grid.GetContent(0, 0)); // soil
-
-        PlaceAbsolute(0, 0, "moonglow");
-        PlaceAbsolute(1, 0, "starleaf tree");
-        PlaceAbsolute(2, 0, "moonglow");
-
-        PrintGrid();
-        Debug.Log("Debug Score (Should be 10): " + CalculateMana());
-    }
-
-    // Loops over the grid. For each plant contained in the Plant dictionary, it calls the Score function of that plant object.
-    public int CalculateMana()
-    {
-        int mana = 0;
-        for (int i = 0; i < grid.GetHeight(); i++)
-        {
-            for (int j = 0; j < grid.GetWidth(); j++)
-            {
-                string content = grid.GetContent(i, j);
-                if (plantRef.TryGetValue(content, out Plant plant))
+                for (int j = 0; j < width; j++)
                 {
-                    mana += plant.Score(j, i, grid, plantRef);
-                    // Debug.Log("Plant: " + plant.name + " at " + j.ToString() + ", " + i.ToString() + " with score " + plant.Score(j, i, grid, plantRef));
+                    tiles[i, j] = Instantiate(fertileSoil, new Vector3(this.transform.position.x + j * tileSize, this.transform.position.y + i * tileSize, 0), Quaternion.identity);
                 }
             }
-        }
-        return mana;
-    }
 
-    // Places a plant on the grid at the player's current position
-    public void Place(string content)
-    {
-        if (player == null)
-        {
-            player = GameObject.Find("Player");
-        }
-
-        // check if the content is a valid plant
-        if (!plantRef.ContainsKey(content))
-        {
-            throw new ArgumentException("Invalid plant name.");
-        }
-
-        Vector2 tile = PositionToTile();
-        if (tile.x == -1 && tile.y == -1)
-        {
-            return;
-        }
-
-        grid.SetContent((int)tile.y, (int)tile.x, content);
-        plants[(int)tile.y, (int)tile.x] = InstantiatePlant(content, (int)tile.x, (int)tile.y);
-    }
-
-    // Places a plant on the grid at the specified position
-    public void PlaceAbsolute(int x, int y, string content)
-    {
-        if (!plantRef.ContainsKey(content))
-        {
-            throw new ArgumentException("Invalid plant name.");
-        }
-
-        grid.SetContent(y, x, content);
-        plants[y, x] = InstantiatePlant(content, x, y);
-    }
-
-    // Returns the content of the grid at the specified position
-    public string GetContent(int x, int y)
-    {
-        return grid.GetContent(y, x);
-    }
-
-    // Prints the contents of the grid to the console
-    public void PrintGrid() {
-        for (int i = 0; i < grid.GetHeight(); i++)
-        {
-            for (int j = 0; j < grid.GetWidth(); j++)
+            if (player == null)
             {
-                Debug.Log(j.ToString() + ", " + i.ToString() + ": " + grid.GetContent(i, j));
+                player = GameObject.Find("Player");
             }
-        }
-    }
 
-    private GameObject InstantiatePlant(string plantName, int x, int y)
-    {
-        // Convert the grid position to a world position
-        Vector3 position = new Vector3(this.transform.position.x + x * tileSize, this.transform.position.y + y * tileSize, -1);
+            plantRef = definePlants();
 
-        if (plants[y, x] != null)
-        {
-            return null;
+            // runTest();
+
         }
 
-        switch (plantName)
+        // Define the names and types of all plants that can be placed on the grid
+        private Dictionary<string, Plant> definePlants()
         {
-            case "moonglow":
-                return Instantiate(moonglow, position, Quaternion.identity);
-            case "starleaf tree":
-                return Instantiate(starleafTree, position, Quaternion.identity);
-            default:
-                return null;
-        }
-    }
+            plantRef = new Dictionary<string, Plant>();
+            plantRef.Add("moonglow", new Plant("moonglow", "bush"));
+            plantRef.Add("starleaf tree", new Plant("starleaf tree", "tree"));
 
-    private void DestroyPlant(int x, int y)
-    {
-        Destroy(plants[y, x]);
-    }
-
-    // Converts the player's position to a tile on the grid
-    private Vector2 PositionToTile()
-    {
-        Vector3 playerPosition = player.transform.position;
-        Vector2 notInGrid = new Vector2(-1, -1);
-        
-        // Find the player's position relative to the corner of the grid
-        float relativeX = playerPosition.x - gridX;
-        float relativeY = playerPosition.y - gridY;
-
-        // Check if the player is inside the grid
-        if (relativeX < 0 || relativeX >= grid.GetWidth() * tileSize || relativeY < 0 || relativeY >= grid.GetHeight() * tileSize)
-        {
-            return notInGrid;
+            return plantRef;
         }
 
-        // Find the player's position in terms of tiles
-        int tileX = (int)(relativeX / tileSize);
-        int tileY = (int)(relativeY / tileSize);
-
-        return new Vector2(tileX, tileY);
-    }
-
-    //private void OnDestroy()
-    //{
-    //    foreach (GameObject tile in tiles)
-    //    {
-    //        Destroy(tile);
-    //    }
-
-    //    foreach (GameObject plant in plants)
-    //    {
-    //        Destroy(plant);
-    //    }
-    //}
-}
-
-// In hindsight I think this maybe should have all been included in the main placement tracker script, but I'm too lazy to change it now.
-// This class proivides some basic useful functions for working with a grid beyond what I would get from a 2D array.
-class Grid
-{
-    private string[,] grid;
-
-    public Grid(int height, int width)
-    {
-        grid = new string[height, width];
-        for (int i = 0; i < GetHeight(); i++)
+        // Checks to see that the grid initializes correctly and that the CalculateMana function works
+        private void runTest()
         {
-            for (int j = 0; j < GetWidth(); j++)
+            Debug.Log("Debug Tile (should be soil): " + grid.GetContent(0, 0)); // soil
+
+            PlaceAbsolute(0, 0, "moonglow");
+            PlaceAbsolute(1, 0, "starleaf tree");
+            PlaceAbsolute(2, 0, "moonglow");
+
+            PrintGrid();
+            Debug.Log("Debug Score (Should be 10): " + CalculateMana());
+        }
+
+        // Loops over the grid. For each plant contained in the Plant dictionary, it calls the Score function of that plant object.
+        public int CalculateMana()
+        {
+            int mana = 0;
+            for (int i = 0; i < grid.GetHeight(); i++)
             {
-                grid[i, j] = "soil";
-            }
-        }
-    }
-
-    public void setGrid(string[,] grid)
-    {
-        if (grid.GetLength(0) != GetHeight() || grid.GetLength(1) != GetWidth())
-        {
-            throw new ArgumentException("The new grid must have the same dimensions as the old grid.");
-        }
-
-        this.grid = grid;
-    }
-
-    public int GetHeight()
-    {
-        return grid.GetLength(0);
-    }
-
-    public int GetWidth()
-    {
-        return grid.GetLength(1);
-    }
-
-    public string GetContent(int row, int col)
-    {
-        if (row < 0 || row >= GetHeight() || col < 0 || col >= GetWidth())
-        {
-            return "out of bounds";
-        }
-        return grid[row, col];
-    }
-
-    public void SetContent(int row, int col, string content)
-    {
-        if (row < 0 || row >= GetHeight() || col < 0 || col >= GetWidth())
-        {
-            throw new ArgumentOutOfRangeException("Row or column is out of the grid's bounds.");
-        }
-        grid[row, col] = content;
-    }
-}
-
-// This really should be a parent class with subclasses for each type of plant, but I'm lazy so instead you get a switch statement.
-// Plants must have a name and a type. The Score function calculates the mana generated by the plant at the specified position.
-// When you add a new plant, you must add a case to the switch statement in the Score function.
-class Plant
-{
-    public string name;
-    public string type;
-
-    public Plant(string name, string type)
-    {
-        this.name = name;
-        this.type = type;
-    }
-
-    public int Score(int x, int y, Grid grid, Dictionary<string, Plant> plantRef)
-    {
-
-       Vector2[] directions = { new Vector2(0, 1), new Vector2(1, 0), new Vector2(0, -1), new Vector2(-1, 0) };
-       
-       switch (name) {
-            case "moonglow":
-                return 3;
-            case "starleaf tree":
-                // Get the number of adjacent bushes
-                int count = 0;
-                
-                foreach (Vector2 dir in directions) {
-                    if (plantRef.TryGetValue(grid.GetContent(y + (int)dir.y, x + (int)dir.x), out Plant plant))
+                for (int j = 0; j < grid.GetWidth(); j++)
+                {
+                    string content = grid.GetContent(i, j);
+                    if (plantRef.TryGetValue(content, out Plant plant))
                     {
-                        if (plant.type == "bush")
-                        {
-                            count++;
-                        }
+                        mana += plant.Score(j, i, grid, plantRef);
+                        // Debug.Log("Plant: " + plant.name + " at " + j.ToString() + ", " + i.ToString() + " with score " + plant.Score(j, i, grid, plantRef));
                     }
                 }
-                return 2*count;
+            }
+            return mana;
+        }
 
-            default:
-                return 0;
+        // Places a plant on the grid at the player's current position
+        public void Place(string content)
+        {
+            // check if the content is a valid plant
+            if (!plantRef.ContainsKey(content))
+            {
+                throw new ArgumentException("Invalid plant name.");
+            }
+
+
+            Vector2 tile = PositionToTile();
+            if (tile.x == -1 && tile.y == -1)
+            {
+                Debug.Log("Player is not in the grid.");
+                return;
+            }
+
+            if (grid.GetContent((int)tile.y, (int)tile.x) != "soil")
+            {
+                grid.SetContent((int)tile.y, (int)tile.x, "soil");
+                DestroyImmediate(plants[(int)tile.y, (int)tile.x]);
+            }
+
+
+            grid.SetContent((int)tile.y, (int)tile.x, content);
+            plants[(int)tile.y, (int)tile.x] = InstantiatePlant(content, (int)tile.x, (int)tile.y);
+
+            Debug.Log("Debug Score: " + CalculateMana());
+        }
+
+        // Places a plant on the grid at the specified position
+        public void PlaceAbsolute(int x, int y, string content)
+        {
+            if (!plantRef.ContainsKey(content))
+            {
+                throw new ArgumentException("Invalid plant name.");
+            }
+
+            grid.SetContent(y, x, content);
+            plants[y, x] = InstantiatePlant(content, x, y);
+        }
+
+        // Returns the content of the grid at the specified position
+        public string GetContent(int x, int y)
+        {
+            return grid.GetContent(y, x);
+        }
+
+        // Prints the contents of the grid to the console
+        public void PrintGrid()
+        {
+            for (int i = 0; i < grid.GetHeight(); i++)
+            {
+                for (int j = 0; j < grid.GetWidth(); j++)
+                {
+                    Debug.Log(j.ToString() + ", " + i.ToString() + ": " + grid.GetContent(i, j));
+                }
+            }
+        }
+
+        private GameObject InstantiatePlant(string plantName, int x, int y)
+        {
+            // Convert the grid position to a world position
+            Vector3 position = new Vector3(this.transform.position.x + x * tileSize, this.transform.position.y + y * tileSize, -1);
+
+            if (plants[y, x] != null)
+            {
+                return null;
+            }
+
+            switch (plantName)
+            {
+                case "moonglow":
+                    return Instantiate(moonglow, position, Quaternion.identity);
+                case "starleaf tree":
+                    return Instantiate(starleafTree, position, Quaternion.identity);
+                default:
+                    return null;
+            }
+        }
+
+        private void DestroyPlant(int x, int y)
+        {
+            Destroy(plants[y, x]);
+        }
+
+        // Converts the player's position to a tile on the grid
+        private Vector2 PositionToTile()
+        {
+            if (player == null)
+            {
+                player = GameObject.Find("Player");
+            }
+
+            Vector3 playerPosition = player.transform.position;
+            Vector2 notInGrid = new Vector2(-1, -1);
+
+            // Find the player's position relative to the corner of the grid
+            float relativeX = playerPosition.x - this.transform.position.x + 0.5f * tileSize;
+            float relativeY = playerPosition.y - this.transform.position.y + 0.5f * tileSize;
+
+            // Check if the player is inside the grid
+            if (relativeX < 0 || relativeX >= grid.GetWidth() * tileSize || relativeY < 0 || relativeY >= grid.GetHeight() * tileSize)
+            {
+                return notInGrid;
+            }
+
+            // Find the player's position in terms of tiles
+            int tileX = (int)(relativeX / tileSize);
+            int tileY = (int)(relativeY / tileSize);
+
+            return new Vector2(tileX, tileY);
+        }
+
+        //private void OnDestroy()
+        //{
+        //    foreach (GameObject tile in tiles)
+        //    {
+        //        Destroy(tile);
+        //    }
+
+        //    foreach (GameObject plant in plants)
+        //    {
+        //        Destroy(plant);
+        //    }
+        //}
+    }
+
+    // In hindsight I think this maybe should have all been included in the main placement tracker script, but I'm too lazy to change it now.
+    // This class proivides some basic useful functions for working with a grid beyond what I would get from a 2D array.
+    class Grid
+    {
+        private string[,] grid;
+
+        public Grid(int height, int width)
+        {
+            grid = new string[height, width];
+            for (int i = 0; i < GetHeight(); i++)
+            {
+                for (int j = 0; j < GetWidth(); j++)
+                {
+                    grid[i, j] = "soil";
+                }
+            }
+        }
+
+        public void setGrid(string[,] grid)
+        {
+            if (grid.GetLength(0) != GetHeight() || grid.GetLength(1) != GetWidth())
+            {
+                throw new ArgumentException("The new grid must have the same dimensions as the old grid.");
+            }
+
+            this.grid = grid;
+        }
+
+        public int GetHeight()
+        {
+            return grid.GetLength(0);
+        }
+
+        public int GetWidth()
+        {
+            return grid.GetLength(1);
+        }
+
+        public string GetContent(int row, int col)
+        {
+            if (row < 0 || row >= GetHeight() || col < 0 || col >= GetWidth())
+            {
+                return "out of bounds";
+            }
+            return grid[row, col];
+        }
+
+        public void SetContent(int row, int col, string content)
+        {
+            if (row < 0 || row >= GetHeight() || col < 0 || col >= GetWidth())
+            {
+                throw new ArgumentOutOfRangeException("Row or column is out of the grid's bounds.");
+            }
+            grid[row, col] = content;
+        }
+    }
+
+    // This really should be a parent class with subclasses for each type of plant, but I'm lazy so instead you get a switch statement.
+    // Plants must have a name and a type. The Score function calculates the mana generated by the plant at the specified position.
+    // When you add a new plant, you must add a case to the switch statement in the Score function.
+    class Plant
+    {
+        public string name;
+        public string type;
+
+        public Plant(string name, string type)
+        {
+            this.name = name;
+            this.type = type;
+        }
+
+        public int Score(int x, int y, Grid grid, Dictionary<string, Plant> plantRef)
+        {
+
+            Vector2[] directions = { new Vector2(0, 1), new Vector2(1, 0), new Vector2(0, -1), new Vector2(-1, 0) };
+
+            switch (name)
+            { 
+                case "moonglow":
+                    return 3;
+                case "starleaf tree":
+                    // Get the number of adjacent bushes
+                    int count = 0;
+
+                    foreach (Vector2 dir in directions)
+                    {
+                        if (plantRef.TryGetValue(grid.GetContent(y + (int)dir.y, x + (int)dir.x), out Plant plant))
+                        {
+                            if (plant.type == "bush")
+                            {
+                                count++;
+                            }
+                        }
+                    }
+                    return 2 * count;
+
+                default:
+                    return 0;
+            }
         }
     }
 }
