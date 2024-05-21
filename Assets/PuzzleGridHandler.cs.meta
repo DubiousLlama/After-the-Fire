@@ -3,7 +3,10 @@ guid: fa893148958e74a4d864140fb149ef4f
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - fertileSoil: {fileID: 8968708244740185108, guid: 8c2b5944248c4bc439c7b447ccb6ce6a, type: 3}
+  - moonglow: {fileID: 4045223179666815870, guid: 3a83f5d09e11662499f2d823256ee03e, type: 3}
+  - starleafTree: {fileID: 1225203715165240031, guid: 99251496892720542b3007c687f5d08d, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2689129308113217578}
   - component: {fileID: 5280178825859379215}
   m_Layer: 0
-  m_Name: FertileSoil
+  m_Name: FertileSoil_beta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
