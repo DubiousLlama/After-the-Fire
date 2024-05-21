@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 2.3580651
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -231,7 +231,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875649006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.25, y: 2.86, z: 0.08550952}
+  m_LocalPosition: {x: -1.52, y: 0.89, z: 0.08550952}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -329,7 +329,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193874588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 1.1, z: -2}
+  m_LocalPosition: {x: 0.04, y: -1.06, z: -2}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -367,9 +367,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   height: 1
   width: 3
-  fertileSoil: {fileID: 8841647861932878495, guid: 0e2aadda17aba3341802406e406a73a2, type: 3}
-  moonglow: {fileID: 5134573132722811375, guid: a1904cdda8f3c6f4588e2a781a14d3b2, type: 3}
-  starleafTree: {fileID: 3594434669639258523, guid: 8ff807039cbf7b04f93b91d09ca03b93, type: 3}
+  fertileSoil: {fileID: 8968708244740185108, guid: 8c2b5944248c4bc439c7b447ccb6ce6a, type: 3}
+  moonglow: {fileID: 4045223179666815870, guid: 3a83f5d09e11662499f2d823256ee03e, type: 3}
+  starleafTree: {fileID: 1225203715165240031, guid: 99251496892720542b3007c687f5d08d, type: 3}
 --- !u!4 &1868947852
 Transform:
   m_ObjectHideFlags: 0

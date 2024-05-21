@@ -26,7 +26,7 @@ namespace GridHandler
         public int width = 3;
 
         Grid grid;
-        float tileSize = 1.921f; // size of each tile in the grid
+        float tileSize = 0.639204f; // size of each tile in the grid
 
         GameObject player;
 
