@@ -34,6 +34,8 @@ namespace GridHandler
         public GameObject fertileSoil;
         public GameObject moonglow;
         public GameObject starleafTree;
+        public GameObject pinepalm;
+
 
         Dictionary<string, Plant> plantRef; // plant name -> plant object
 
@@ -44,8 +46,8 @@ namespace GridHandler
         private GameObject[,] plants;
 
 
-        // Start is called before the first frame update
-        void Start()
+        // Awake is called before the first frame update and before all Start functions
+        void Awake()
         {
             grid = new Grid(height, width);
 
@@ -82,11 +84,20 @@ namespace GridHandler
             plantRef = new Dictionary<string, Plant>();
             plantRef.Add("moonglow", new Plant("moonglow", "bush"));
             plantRef.Add("starleaf tree", new Plant("starleaf tree", "tree"));
+            plantRef.Add("pinepalm", new Plant("pinepalm", "bush"));
 
             return plantRef;
         }
 
         // Checks to see that the grid initializes correctly and that the CalculateMana function works
+        
+        public void setTile(int x, int y, GameObject tile)
+        {
+            Destroy(tiles[y, x]);
+            tiles[y, x] = Instantiate(tile, new Vector3(this.transform.position.x + x * tileSize, this.transform.position.y + y * tileSize, 0), Quaternion.identity);
+        
+        }
+
         private void runTest()
         {
             Debug.Log("Debug Tile (should be soil): " + grid.GetContent(0, 0)); // soil
@@ -127,11 +138,17 @@ namespace GridHandler
                 throw new ArgumentException("Invalid plant name.");
             }
 
-
             Vector2 tile = PositionToTile();
             if (tile.x == -1 && tile.y == -1)
             {
                 Debug.Log("Player is not in the grid.");
+                return;
+            }
+
+            // Check if the tile is fertile soil
+            if (tiles[(int)tile.y, (int)tile.x].tag != "Plantable")
+            {
+                Debug.Log("Tile is not fertile soil.");
                 return;
             }
 
@@ -194,6 +211,8 @@ namespace GridHandler
                     return Instantiate(moonglow, position, Quaternion.identity);
                 case "starleaf tree":
                     return Instantiate(starleafTree, position, Quaternion.identity);
+                case "pinepalm":
+                    return Instantiate(pinepalm, position, Quaternion.identity);
                 default:
                     return null;
             }
@@ -341,7 +360,29 @@ namespace GridHandler
                         }
                     }
                     return 2 * count;
+                case "pinepalm":
+                    // Return the number of adjacent plants with different names
+                    HashSet<string> names = new HashSet<string>();
 
+                    foreach (Vector2 dir in directions)
+                    {
+                        if (plantRef.TryGetValue(grid.GetContent(y + (int)dir.y, x + (int)dir.x), out Plant plant))
+                        {
+                            if (plant.name != "soil" && plant.name != "pinepalm")
+                            {
+                                names.Add(plant.name);
+                            }
+                            
+                        }
+                    }
+                    if (names.Count > 1)
+                    {
+                        return 5;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                 default:
                     return 0;
             }

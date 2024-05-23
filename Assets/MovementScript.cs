@@ -40,6 +40,12 @@ public class MovementScript : MonoBehaviour
             // Place a plant at the grid position
             gridHandler.Place("starleaf tree");
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+
+            // Place a plant at the grid position
+            gridHandler.Place("pinepalm");
+        }
     }
 
     // Write a basic movement script that moves the object in the direction of the arrow keys
@@ -55,7 +61,7 @@ public class MovementScript : MonoBehaviour
             transform.position += new Vector3(0, -0.08f, 0);
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             transform.position += new Vector3(0.08f, 0, 0);
         }
