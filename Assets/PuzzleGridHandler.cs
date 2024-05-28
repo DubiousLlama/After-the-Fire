@@ -132,17 +132,32 @@ namespace GridHandler
         // Places a plant on the grid at the player's current position
         public void Place(string content)
         {
-            // check if the content is a valid plant
-            if (!plantRef.ContainsKey(content))
-            {
-                throw new ArgumentException("Invalid plant name.");
-            }
-
             Vector2 tile = PositionToTile();
             if (tile.x == -1 && tile.y == -1)
             {
                 Debug.Log("Player is not in the grid.");
                 return;
+            }
+
+            if (content == "soil")
+            {
+                if (grid.GetContent((int)tile.y, (int)tile.x) == "soil")
+                {
+                    return;
+                }
+                else
+                {
+                    grid.SetContent((int)tile.y, (int)tile.x, "soil");
+                    DestroyImmediate(plants[(int)tile.y, (int)tile.x]);
+                    Debug.Log("Debug Score: " + CalculateMana());
+                    return;
+                }
+            }
+
+            // check if the content is a valid plant
+            if (!plantRef.ContainsKey(content))
+            {
+                throw new ArgumentException("Invalid plant name.");
             }
 
             // Check if the tile is fertile soil
@@ -154,10 +169,8 @@ namespace GridHandler
 
             if (grid.GetContent((int)tile.y, (int)tile.x) != "soil")
             {
-                grid.SetContent((int)tile.y, (int)tile.x, "soil");
                 DestroyImmediate(plants[(int)tile.y, (int)tile.x]);
             }
-
 
             grid.SetContent((int)tile.y, (int)tile.x, content);
             plants[(int)tile.y, (int)tile.x] = InstantiatePlant(content, (int)tile.x, (int)tile.y);
