@@ -231,8 +231,17 @@ namespace GridHandler
         {
             // Convert the grid position to a world position
             Vector3 position = new Vector3(this.transform.position.x + x * tileSize, this.transform.position.y + y * tileSize, -1);
+            Debug.Log(x);
+            Debug.Log(y);
+            Vector3 lowerPlantOffset = new Vector3(0, 0, -0.01f);
+
+            position = position + lowerPlantOffset * -y;
 
             Vector3 treeOffset = new Vector3(0, 0.25f, 0);
+
+            Vector3 plantOffset = new Vector3(0, 0.12f, 0);
+
+
 
             if (plants[y, x] != null)
             {
@@ -242,11 +251,11 @@ namespace GridHandler
             switch (plantName)
             {
                 case "moonglow":
-                    return Instantiate(moonglow, position, Quaternion.identity);
+                    return Instantiate(moonglow, position + plantOffset, Quaternion.identity);
                 case "starleaf tree":
                     return Instantiate(starleafTree, position + treeOffset, Quaternion.identity);
                 case "pinepalm":
-                    return Instantiate(pinepalm, position, Quaternion.identity);
+                    return Instantiate(pinepalm, position + plantOffset, Quaternion.identity);
                 default:
                     return null;
             }
