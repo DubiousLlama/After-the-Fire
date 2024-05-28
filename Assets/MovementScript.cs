@@ -30,7 +30,6 @@ public class MovementScript : MonoBehaviour
         // If the space bar is pressed, place a plant
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-
             // Place a plant at the grid position
             gridHandler.Place("moonglow");
         }
