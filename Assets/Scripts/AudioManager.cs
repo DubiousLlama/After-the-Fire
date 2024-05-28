@@ -33,11 +33,11 @@ namespace Audio
         private void Update()
         {
 
-            // When the player presses Ctrl+K, start the music "Peaceful" with a fade. Only if the game is running in the editor.
-            //if (Input.GetKeyDown(KeyCode.K) && Application.isEditor)
-            //{
-            //    StartMusicFade("Peaceful");
-            //}
+            // When the player presses K, start the music "Peaceful" with a fade.Only if the game is running in the editor.
+            if (Input.GetKeyDown(KeyCode.K) && Application.isEditor)
+            {
+                StartMusicFade("Peaceful");
+            }
 
             // Keep the AudioManager centered on the player
             transform.position = Camera.main.transform.position;

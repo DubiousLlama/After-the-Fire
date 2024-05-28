@@ -45,6 +45,12 @@ public class MovementScript : MonoBehaviour
             // Place a plant at the grid position
             gridHandler.Place("pinepalm");
         }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+
+            // Place a plant at the grid position
+            gridHandler.Place("soil");
+        }
     }
 
     // Write a basic movement script that moves the object in the direction of the arrow keys
