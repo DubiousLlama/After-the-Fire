@@ -42,10 +42,8 @@ namespace GridHandler
 
 
         private Transform location;
-
         private GameObject[,] tiles;
         private GameObject[,] plants;
-
         private AudioManager audioManager;
 
 

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GridHandler;
 
 public class InventoryManager : MonoBehaviour
 {
     public int maxStackSize = 4;
     public InvSlot[] invSlots;
     public GameObject invItemPrefab;
+    public PuzzleGridHandler puzzleGrid;
 
     int selectedSlot = -1;
 
@@ -16,11 +18,18 @@ public class InventoryManager : MonoBehaviour
 
     private void Update() {
         if (Input.inputString != null) {
+
             bool isNumber = int.TryParse(Input.inputString, out int number);
             if (isNumber && number > 0 && number < 8) {
                 ChangeSelectedSlot(number - 1);
             }
+
+            if(Input.inputString == " ") {
+                puzzleGrid.Place("moonglow");
+                Item item = GetSelectedItem(true);
+            }
         }
+
     }
 
     void ChangeSelectedSlot(int newValue) {
