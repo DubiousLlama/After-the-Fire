@@ -37,6 +37,9 @@ namespace GridHandler
         public GameObject starleafTree;
         public GameObject pinepalm;
 
+        AudioManager audioManager;
+
+
 
         Dictionary<string, Plant> plantRef; // plant name -> plant object
 
@@ -46,7 +49,7 @@ namespace GridHandler
         private GameObject[,] tiles;
         private GameObject[,] plants;
 
-        private AudioManager audioManager;
+        // private AudioManager audioManager;
 
 
         // Awake is called before the first frame update and before all Start functions
@@ -82,7 +85,7 @@ namespace GridHandler
 
         private void Start()
         {
-            audioManager = FindObjectOfType<AudioManager>();
+            audioManager = AudioManager.instance;
         }
 
         // Define the names and types of all plants that can be placed on the grid
@@ -251,10 +254,22 @@ namespace GridHandler
             switch (plantName)
             {
                 case "moonglow":
+                    if (moonglow == null)
+                    {
+                        return null;
+                    }
                     return Instantiate(moonglow, position + plantOffset, Quaternion.identity);
                 case "starleaf tree":
+                    if (starleafTree == null)
+                    {
+                        return null;
+                    }
                     return Instantiate(starleafTree, position + treeOffset, Quaternion.identity);
                 case "pinepalm":
+                    if (pinepalm == null)
+                    {
+                        return null;
+                    }
                     return Instantiate(pinepalm, position + plantOffset, Quaternion.identity);
                 default:
                     return null;
