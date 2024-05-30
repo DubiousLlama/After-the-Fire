@@ -8,7 +8,7 @@ public class InventoryManager : MonoBehaviour
     public int maxStackSize = 4;
     public InvSlot[] invSlots;
     public GameObject invItemPrefab;
-    public PuzzleGridHandler puzzleGrid;
+    public PuzzleManager puzzleGrid;
     public Item[] itemsToStart;
 
     int selectedSlot = -1;
