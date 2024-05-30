@@ -629,6 +629,7 @@ MonoBehaviour:
   moonglow: {fileID: 4045223179666815870, guid: 3a83f5d09e11662499f2d823256ee03e, type: 3}
   starleafTree: {fileID: 8182423126175626194, guid: 201c91ebd2caf6c4f856e95f838c16bc, type: 3}
   pinepalm: {fileID: 3579398094582207369, guid: 74bee686c78a40646b97df2dfec3d29f, type: 3}
+  manaScore: {fileID: 0}
 --- !u!1 &1277263195
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,39 +777,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music:
   - name: Pensive
-    clip: {fileID: 8300000, guid: 2eef61d169f8a3b4bb9802f38c2f4f9f, type: 3}
+    clip: {fileID: 8300000, guid: f6f1e0bb74023a149a124cfe43e56e20, type: 3}
     volume: 0.5
   - name: Playful
-    clip: {fileID: 8300000, guid: f72a06f9004b3f440b1065483e682cd8, type: 3}
+    clip: {fileID: 8300000, guid: 1dfc701b57e850547ae9403b6d847add, type: 3}
     volume: 0.5
   - name: Peaceful
-    clip: {fileID: 8300000, guid: 9605f1657c7efe040a430dfdf532a6bd, type: 3}
+    clip: {fileID: 8300000, guid: f00439a58032dec4cb206d284cf19bc9, type: 3}
     volume: 0.5
   sfx:
   - name: Retro
-    clip: {fileID: 8300000, guid: 1b55185398f03f3469535aab959d1aff, type: 3}
+    clip: {fileID: 8300000, guid: 66efdf95c9d992b45be6dcbf7e4d0827, type: 3}
     volume: 1
   - name: Woosh
-    clip: {fileID: 8300000, guid: fd7f6c474eaf4644d952299ab4c6b23e, type: 3}
+    clip: {fileID: 8300000, guid: c62654e704299cb4aade8f21f19aeaff, type: 3}
     volume: 1
   - name: Dig
-    clip: {fileID: 8300000, guid: bd0010c81d8e34243814c2b62f96e918, type: 3}
+    clip: {fileID: 8300000, guid: 9ce7974c5c39f4e468df06b30c31f2ae, type: 3}
     volume: 1
   - name: LongDig
-    clip: {fileID: 8300000, guid: 238bf1bdc9fe18b4bbc1fdd78e4ebe99, type: 3}
+    clip: {fileID: 8300000, guid: ed485c6e10d5bce42b9ece9ff269abba, type: 3}
     volume: 1
   - name: HitRock
-    clip: {fileID: 8300000, guid: 7fe7eff57c3d2cf44900574e674f4228, type: 3}
+    clip: {fileID: 8300000, guid: 79af4b21d983c1c4c895f6f186fc4a4c, type: 3}
     volume: 1
   - name: ShortDig
-    clip: {fileID: 8300000, guid: 9bc0ebfae8ab65a43baca7cf0f45d617, type: 3}
-    volume: 1
-  - name: ShortDig
-    clip: {fileID: 8300000, guid: 9bc0ebfae8ab65a43baca7cf0f45d617, type: 3}
+    clip: {fileID: 8300000, guid: 9ce7974c5c39f4e468df06b30c31f2ae, type: 3}
     volume: 1
   ambiance:
   - name: Forest
-    clip: {fileID: 8300000, guid: a7955f507ebbba5458966da7d35151f8, type: 3}
+    clip: {fileID: 8300000, guid: 10e532f9d6c0759458c721d9b4fb364a, type: 3}
     volume: 0.3
   musicSource: {fileID: 2115374511}
   sfxSource: {fileID: 2070015092}

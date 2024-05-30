@@ -62,14 +62,7 @@ namespace GridHandler
             // Get the location of this gamebobect
             location = this.transform;
 
-            // Instantiate a grid of soil made up of the fertileSoil prefab
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    tiles[i, j] = Instantiate(fertileSoil, new Vector3(this.transform.position.x + j * tileSize, this.transform.position.y + i * tileSize, 0), Quaternion.identity);
-                }
-            }
+            tiles = generateTiles();
 
             if (player == null)
             {
@@ -79,6 +72,13 @@ namespace GridHandler
             plantRef = definePlants();
 
             // runTest();
+
+            // Disable all children of the game object this is attached to
+            foreach (Transform child in location)
+            {
+                child.gameObject.SetActive(false);
+            }
+            
         }
 
         private void Start()
@@ -174,11 +174,12 @@ namespace GridHandler
             plants[(int)tile.y, (int)tile.x] = InstantiatePlant(content, (int)tile.x, (int)tile.y);
 
             int currentMana = CalculateMana();
+
             if (manaScore != null){
                 manaScore.text = currentMana.ToString();
+                Debug.Log("new manascore:" + manaScore.text);
             }
             Debug.Log("Debug Score: " + CalculateMana());
-            Debug.Log("new manascore:" + manaScore.text);
             // Play the long dig for trees and the short dig for bushes
             if (plantRef[content].type == "tree")
             {
@@ -227,6 +228,12 @@ namespace GridHandler
 
             Vector3 treeOffset = new Vector3(0, 0.25f, 0);
 
+            Vector3 plantOffset = new Vector3(0, 0.12f, 0);
+
+            Vector3 lowerPlantOffset = new Vector3(0, 0, -0.01f);
+
+            position = position + lowerPlantOffset * -y;
+
             if (plants[y, x] != null)
             {
                 return null;
@@ -235,11 +242,11 @@ namespace GridHandler
             switch (plantName)
             {
                 case "moonglow":
-                    return Instantiate(moonglow, position, Quaternion.identity);
+                    return Instantiate(moonglow, position + plantOffset, Quaternion.identity);
                 case "starleaf tree":
                     return Instantiate(starleafTree, position + treeOffset, Quaternion.identity);
                 case "pinepalm":
-                    return Instantiate(pinepalm, position, Quaternion.identity);
+                    return Instantiate(pinepalm, position + plantOffset, Quaternion.identity);
                 default:
                     return null;
             }
@@ -290,6 +297,23 @@ namespace GridHandler
         //        Destroy(plant);
         //    }
         //}
+
+        // Generates a grid of soil tiles. DEPRECATED
+        private GameObject[,] generateTiles()
+        {
+            GameObject[,] tiles = new GameObject[height, width];
+
+            // Instantiate a grid of soil made up of the fertileSoil prefab
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    tiles[i, j] = Instantiate(fertileSoil, new Vector3(this.transform.position.x + j * tileSize, this.transform.position.y + i * tileSize, 0), Quaternion.identity);
+                }
+            }
+
+            return tiles;
+        }
     }
 
     // In hindsight I think this maybe should have all been included in the main placement tracker script, but I'm too lazy to change it now.
