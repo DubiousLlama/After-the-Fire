@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GridHandler;
+using UnityEditor;
 
 public class PuzzleManager : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class PuzzleManager : MonoBehaviour
 
             // Add the puzzle to the dictionary
             puzzleDict.Add(puzzlePos, puzzle);
+
+            Debug.Log(puzzle);
+            Debug.Log(puzzlePos);
         }
 
         // Get the player object

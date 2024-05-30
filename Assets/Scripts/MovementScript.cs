@@ -10,7 +10,7 @@ using System;
 
 public class MovementScript : MonoBehaviour
 {
-    GridHandler.PuzzleGridHandler gridHandler;
+    PuzzleManager gridHandler;
     
     [SerializeField]
     private BoxCollider2D z_BoxCollider;
@@ -19,7 +19,7 @@ public class MovementScript : MonoBehaviour
     void Start()
     {
         // Get the grid handler
-        gridHandler = GameObject.Find("Puzzle Grid Handler").GetComponent<PuzzleGridHandler>();
+        gridHandler = GameObject.Find("PuzzleManager").GetComponent<PuzzleManager>();
         z_BoxCollider = GetComponent<BoxCollider2D>();
     }
 
