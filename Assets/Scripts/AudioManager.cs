@@ -12,6 +12,8 @@ namespace Audio
 
         public static AudioManager instance;
 
+        string currentlyPlaying;
+
         private void Awake()
         {
             if (instance == null)
@@ -39,6 +41,12 @@ namespace Audio
                 StartMusicFade("Peaceful");
             }
 
+            // Loop the current music and ambiance tracks when they run out
+            if (!musicSource.isPlaying)
+            {
+                StartMusicNow(currentlyPlaying);
+            }
+
             // Keep the AudioManager centered on the player
             transform.position = Camera.main.transform.position;
         }
@@ -46,6 +54,9 @@ namespace Audio
         public void StartMusicNow(string name)
         {
             Sound s = System.Array.Find(music, sound => sound.name == name);
+
+            currentlyPlaying = name;
+
             if (s == null)
             {
                 Debug.LogWarning("Sound: " + name + " not found!");
@@ -92,6 +103,9 @@ namespace Audio
         public void StartMusicFade(string name, float fadeOutTime=3f, float fadeInTime=-1)
         {
             Sound s = System.Array.Find(music, sound => sound.name == name);
+
+            currentlyPlaying = name;
+
             if (s == null)
             {
                 Debug.LogWarning("Sound: " + name + " not found!");
