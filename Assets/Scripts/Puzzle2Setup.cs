@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GridHandler;
 
+[ExecuteInEditMode]
 public class Puzzle2Setup : MonoBehaviour
 {
     public GameObject infertileSoil;
