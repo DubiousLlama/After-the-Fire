@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,6 @@ public class Item : ScriptableObject
 {
     
     [Header("Only gameplay")]
-    public TileBase tile;
     public ItemType type;
     public ActionType actionType;
     public Vector2Int range = new Vector2Int(5, 4);
@@ -17,6 +17,7 @@ public class Item : ScriptableObject
     public bool stackable = true;
 
     [Header("Both")]
+    public String plantName;
     public Sprite image;
 }
 public enum ItemType {

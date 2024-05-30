@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GridHandler;
+using System.ComponentModel.Design;
+using System;
+// using System.Numerics;
 
 
 
 public class MovementScript : MonoBehaviour
 {
     GridHandler.PuzzleGridHandler gridHandler;
+    
+    [SerializeField]
+    private BoxCollider2D z_BoxCollider;
 
     // Start is called before the first frame update
     void Start()
     {
-
         // Get the grid handler
         gridHandler = GameObject.Find("Puzzle Grid Handler").GetComponent<PuzzleGridHandler>();
-
-
+        z_BoxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -26,28 +30,9 @@ public class MovementScript : MonoBehaviour
             Debug.LogError("Grid handler not found");
             return;
         }
-
-        // If the space bar is pressed, place a plant
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            // Place a plant at the grid position
-            gridHandler.Place("moonglow");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-
-            // Place a plant at the grid position
-            gridHandler.Place("starleaf tree");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-
-            // Place a plant at the grid position
-            gridHandler.Place("pinepalm");
-        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-
             // Place a plant at the grid position
             gridHandler.Place("soil");
         }
@@ -56,6 +41,10 @@ public class MovementScript : MonoBehaviour
     // Write a basic movement script that moves the object in the direction of the arrow keys
     void FixedUpdate()
     {
+
+        float moveX =  Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             transform.position += new Vector3(0, 0.08f, 0);
@@ -75,5 +64,34 @@ public class MovementScript : MonoBehaviour
         {
             transform.position += new Vector3(-0.08f, 0, 0);
         }
+
+        //check collision X
+        RaycastHit2D castResult = Physics2D.BoxCast(transform.position, 
+                                                    z_BoxCollider.size, 
+                                                    0, 
+                                                    new Vector2(moveX, 0),
+                                                    Mathf.Abs(moveX * Time.fixedDeltaTime),
+                                                    LayerMask.GetMask("BlockMove")
+        );
+
+        if(castResult.collider) {
+            //stop moving X
+            Debug.Log("stop x movement!");
+        }
+
+        //check collision Y
+        castResult = Physics2D.BoxCast(transform.position, 
+                                                    z_BoxCollider.size, 
+                                                    0, 
+                                                    new Vector2(moveY, 0),
+                                                    Mathf.Abs(moveY * Time.fixedDeltaTime),
+                                                    LayerMask.GetMask("BlockMove")
+        );
+
+        if(castResult.collider) {
+            //stop moving Y
+            Debug.Log("stop y movement!");
+        }
+
     }
 }

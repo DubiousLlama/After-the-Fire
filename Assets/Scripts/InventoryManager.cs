@@ -9,8 +9,15 @@ public class InventoryManager : MonoBehaviour
     public InvSlot[] invSlots;
     public GameObject invItemPrefab;
     public PuzzleGridHandler puzzleGrid;
+    public Item[] itemsToStart;
 
     int selectedSlot = -1;
+
+    private void Awake() {
+        foreach(Item i in itemsToStart) {
+            AddItem(i);
+        }
+    }
 
     private void Start() {
         ChangeSelectedSlot(0);
@@ -24,9 +31,12 @@ public class InventoryManager : MonoBehaviour
                 ChangeSelectedSlot(number - 1);
             }
 
-            if(Input.inputString == " ") {
-                puzzleGrid.Place("moonglow");
+            if(Input.GetKeyDown(KeyCode.Space)) {
                 Item item = GetSelectedItem(true);
+
+                puzzleGrid.Place(item.name);
+
+                Debug.Log(item.name);
             }
         }
 
@@ -42,6 +52,7 @@ public class InventoryManager : MonoBehaviour
      public bool AddItem(Item item) {
         for (int i = 0; i < invSlots.Length; i++) {
             InvSlot slot = invSlots[i];
+            Debug.Log(i);
             InvItem itemInSlot = slot.GetComponentInChildren<InvItem>();
 
             if(itemInSlot != null && itemInSlot.item == item &&
@@ -73,6 +84,8 @@ public class InventoryManager : MonoBehaviour
     public Item GetSelectedItem(bool use) {
         InvSlot slot = invSlots[selectedSlot];
         InvItem itemInSlot = slot.GetComponentInChildren<InvItem>();
+
+        Debug.Log(itemInSlot == null);
 
         if(itemInSlot != null) {
             Item item = itemInSlot.item;
