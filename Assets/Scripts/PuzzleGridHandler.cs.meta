@@ -6,7 +6,10 @@ MonoImporter:
   defaultReferences:
   - fertileSoil: {fileID: 8968708244740185108, guid: 8c2b5944248c4bc439c7b447ccb6ce6a, type: 3}
   - moonglow: {fileID: 4045223179666815870, guid: 3a83f5d09e11662499f2d823256ee03e, type: 3}
-  - starleafTree: {fileID: 1225203715165240031, guid: 99251496892720542b3007c687f5d08d, type: 3}
+  - starleafTree: {fileID: 8182423126175626194, guid: 201c91ebd2caf6c4f856e95f838c16bc, type: 3}
+  - pinepalm: {fileID: 3579398094582207369, guid: 74bee686c78a40646b97df2dfec3d29f, type: 3}
+  - bloomberry: {fileID: 2887426175374926106, guid: 0891cd0e3045beb41a4a1bbb09ed6091, type: 3}
+  - manaScore: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

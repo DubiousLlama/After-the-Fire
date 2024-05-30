@@ -1,12 +1,13 @@
+using GridHandler;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GridHandler;
 
 [ExecuteInEditMode]
-public class Puzzle2Setup : MonoBehaviour
+public class Puzzle4Setup : MonoBehaviour
 {
     public GameObject infertileSoil;
+    public GameObject richSoil;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,12 @@ public class Puzzle2Setup : MonoBehaviour
 
         // Set two of the cells to be blocked with a boulder
         //puzzleGridHandler.setTile(2, 0, infertileSoil);
-        puzzleGridHandler.setTile(3, 0, infertileSoil);
+        puzzleGridHandler.setTile(0, 0, infertileSoil);
+        puzzleGridHandler.setTile(2, 0, infertileSoil);
+        puzzleGridHandler.setTile(0, 2, infertileSoil);
+        puzzleGridHandler.setTile(2, 2, infertileSoil);
+        puzzleGridHandler.setTile(1, 1, richSoil);
+
 
     }
 }

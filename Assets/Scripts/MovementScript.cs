@@ -7,14 +7,14 @@ using GridHandler;
 
 public class MovementScript : MonoBehaviour
 {
-    GridHandler.PuzzleGridHandler gridHandler;
+    PuzzleManager gridHandler;
 
     // Start is called before the first frame update
     void Start()
     {
 
         // Get the grid handler
-        gridHandler = GameObject.Find("Puzzle Grid Handler").GetComponent<PuzzleGridHandler>();
+        gridHandler = GameObject.Find("PuzzleManager").GetComponent<PuzzleManager>();
 
 
     }
@@ -44,6 +44,12 @@ public class MovementScript : MonoBehaviour
 
             // Place a plant at the grid position
             gridHandler.Place("pinepalm");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+
+            // Place a plant at the grid position
+            gridHandler.Place("bloomberry");
         }
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
