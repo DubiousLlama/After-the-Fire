@@ -250,6 +250,8 @@ GameObject:
   - component: {fileID: 1193874591}
   - component: {fileID: 1193874590}
   - component: {fileID: 1193874589}
+  - component: {fileID: 1193874592}
+  - component: {fileID: 1193874593}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -264,7 +266,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193874588}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b08ddbcede906740892c7bbfe00b251, type: 3}
   m_Name: 
@@ -336,6 +338,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1193874592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193874588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc7d798b34bc846f9b3da57b633de408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  rb: {fileID: 1193874593}
+  spriteRenderer: {fileID: 1193874590}
+  spriteUp: {fileID: 21300000, guid: 51a0616afeaa8c34db2288bde5f7fd3f, type: 3}
+  spriteDown: {fileID: 21300000, guid: 19649c92769892747b06e026a1f3d1b7, type: 3}
+  spriteLeft: {fileID: 21300000, guid: c1e0ab93d225f2c4ebd984538adf87db, type: 3}
+  spriteRight: {fileID: 21300000, guid: a3220012719dc6c479a8f45ed3d8e0e8, type: 3}
+--- !u!50 &1193874593
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193874588}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1868947850
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +412,7 @@ MonoBehaviour:
   fertileSoil: {fileID: 8968708244740185108, guid: 8c2b5944248c4bc439c7b447ccb6ce6a, type: 3}
   moonglow: {fileID: 4045223179666815870, guid: 3a83f5d09e11662499f2d823256ee03e, type: 3}
   starleafTree: {fileID: 1225203715165240031, guid: 99251496892720542b3007c687f5d08d, type: 3}
+  pinepalm: {fileID: 0}
 --- !u!4 &1868947852
 Transform:
   m_ObjectHideFlags: 0
