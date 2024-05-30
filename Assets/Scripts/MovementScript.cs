@@ -45,6 +45,12 @@ public class MovementScript : MonoBehaviour
             // Place a plant at the grid position
             gridHandler.Place("pinepalm");
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+
+            // Place a plant at the grid position
+            gridHandler.Place("bloomberry");
+        }
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
 
