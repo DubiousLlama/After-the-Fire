@@ -85,7 +85,8 @@ namespace GridHandler
 
             // runTest();
         }
-    private void Start()
+
+        void Start()
         {
             audioManager = FindObjectOfType<AudioManager>();
         }
@@ -103,7 +104,6 @@ namespace GridHandler
         }
 
         // Checks to see that the grid initializes correctly and that the CalculateMana function works
-        
         public void setTile(int x, int y, GameObject tile)
         {
             # if UNITY_EDITOR
@@ -169,6 +169,23 @@ namespace GridHandler
                 }
             }
             return mana;
+        }
+
+        public int countType(string plant)
+        {
+            // Count the number of grid cells matching the plant string
+            int num = 0;
+            for (int i = 0; i < grid.GetHeight(); i++)
+            {
+                for (int j = 0; j < grid.GetWidth(); j++)
+                {
+                    if (grid.GetContent(j, i) == plant)
+                    {
+                        num += 1;
+                    }
+                }
+            }
+            return num;
         }
 
         // Places a plant on the grid at the player's current position
@@ -302,11 +319,6 @@ namespace GridHandler
                 default:
                     return null;
             }
-        }
-
-        private void DestroyPlant(int x, int y)
-        {
-            Destroy(plants[y, x]);
         }
 
         // Converts the player's position to a tile on the grid
