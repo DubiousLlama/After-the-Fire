@@ -35,7 +35,7 @@ namespace GridHandler
         [Header("Solve Requirements")]
         public int manaRequired = 10;
         public string plantRequired = "";
-        public int plantRequiredAmount = 1;
+        public int plantRequiredAmount = 3;
 
         
 
