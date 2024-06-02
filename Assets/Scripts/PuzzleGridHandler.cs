@@ -28,13 +28,16 @@ namespace GridHandler
     {
         // public string[,] setup = { { "soil", "soil", "soil" } };
 
+        [Header("Grid Size")]
         public int height = 1;
         public int width = 3;
 
-        Grid grid;
-        float tileSize = 0.639204f; // size of each tile in the grid
+        [Header("Solve Requirements")]
+        public int manaRequired = 10;
+        public string plantRequired = "";
+        public int plantRequiredAmount = 1;
 
-        GameObject player;
+        
 
         [Header("Prefabs")]
         public GameObject fertileSoil;
@@ -43,8 +46,11 @@ namespace GridHandler
         public GameObject pinepalm;
         public GameObject bloomberry;
 
-        Dictionary<string, Plant> plantRef; // plant name -> plant object
+        private Dictionary<string, Plant> plantRef; // plant name -> plant object
 
+        private Grid grid;
+        private float tileSize = 0.639204f; // size of each tile in the grid
+        private GameObject player;
 
         private Transform location;
         public GameObject[,] tiles;

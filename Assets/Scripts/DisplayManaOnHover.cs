@@ -8,8 +8,6 @@ public class DisplayManaOnHover : MonoBehaviour
 {
     PuzzleGridHandler[] puzzleGridHandlers;
 
-    private int mana;
-
     GameObject display = null;
 
     public GameObject manaDisplay;
@@ -25,7 +23,7 @@ public class DisplayManaOnHover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Update");
+        // Debug.Log("Update");
 
         // get the x and y location of the mouse
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -37,8 +35,8 @@ public class DisplayManaOnHover : MonoBehaviour
         GameObject player = GameObject.Find("Player");
 
         // Get the position of the player and print it to the debug log
-        Debug.Log("Player position: " + player.transform.position + ", Mouse position: " + mousePos);
-        Debug.Log("Player position: " + puzzleGridHandlers[0].PositionToTile(player.transform.position) + ", Mouse position: " + puzzleGridHandlers[0].PositionToTile(mousePos));
+        // Debug.Log("Player position: " + player.transform.position + ", Mouse position: " + mousePos);
+        //Debug.Log("Player position: " + puzzleGridHandlers[0].PositionToTile(player.transform.position) + ", Mouse position: " + puzzleGridHandlers[0].PositionToTile(mousePos));
 
         // translate that to a grid location
         foreach (PuzzleGridHandler puzzleGridHandler in puzzleGridHandlers)
@@ -74,7 +72,7 @@ public class DisplayManaOnHover : MonoBehaviour
             this.transform.position = center;
 
             // display the ManaDisplay
-            Debug.Log("Displaying mana at " + center);
+            // Debug.Log("Displaying mana at " + center);
             if (display == null)
             {
                 display = Instantiate(manaDisplay, Vector3.zero, Quaternion.identity);
@@ -101,6 +99,8 @@ public class DisplayManaOnHover : MonoBehaviour
             // set the text of the ManaDisplay to the mana at that location
             display.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = mana.ToString();
         }
+
+
     }
 }
 
