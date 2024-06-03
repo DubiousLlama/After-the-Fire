@@ -23,16 +23,22 @@ public class BookInteraction : MonoBehaviour
     };
     private int currMessageInd = 0;
     public float textSpeed = 0.05f; // Speed at which text appears
-    //SpaceTab for dialogue:
-    public GameObject dialogueSpaceBar;
+    public GameObject dialogueSpaceBar; //SpaceTab for dialogue:
+    private bool deactivateSpaceTab; //Deactivates spacetab at the end of dialogue
+    public GameObject removeInstructionsCanvas; 
+    private bool hideInstructions;
+    public GameObject stump;
+    private float fadeDuration = 2.0f;
     // Start is called before the first frame update
-    private bool deactivateSpaceTab;
+    
+    
     void Start()
     {
         spaceTab.SetActive(false);
         dialogueCanvas.SetActive(false);
         dialogueSpaceBar.SetActive(false);
         bookPageCanvas.SetActive(false);
+        removeInstructionsCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -48,8 +54,14 @@ public class BookInteraction : MonoBehaviour
                 }
             }else{
                 spaceTab.SetActive(false);
+                if (!hideInstructions){
+                    removeInstructionsCanvas.SetActive(true);
+                }else{
+                    removeInstructionsCanvas.SetActive(false);
+                }
+
+                RemoveStump();
             }
-            
         }else{
             spaceTab.SetActive(false);
             dialogueCanvas.SetActive(false);
@@ -99,6 +111,31 @@ public class BookInteraction : MonoBehaviour
         book.SetActive(false);
         deactivateSpaceTab = true;
         
+    }
+    void RemoveStump(){
+        if (Input.GetKeyDown(KeyCode.R)){
+            Debug.Log("R pressed, begin removal");
+            hideInstructions = true;
+            StartCoroutine(FadeOut(stump, fadeDuration));
+        }
+    }
+    IEnumerator FadeOut(GameObject obj, float duration){
+        if (obj != null){
+            Renderer renderer = obj.GetComponent<Renderer>();
+            if (renderer != null){
+                Material mat = renderer.material;
+                Color initialColor = mat.color;
+                float counter = 0;
+                while (counter < duration){
+                    float alpha = Mathf.Lerp(1.0f, 0.0f, counter / duration); //Transparency
+                    mat.color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
+                    counter += Time.deltaTime;
+                    yield return null;
+                }
+                mat.color = new Color(initialColor.r, initialColor.g, initialColor.b, 0); //becomes transparent
+                obj.SetActive(false);
+            }
+        }
     }
      
     
