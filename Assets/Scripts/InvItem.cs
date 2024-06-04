@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class InvItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     
     [Header("UI")]
     public Image image;
-    public Text countText;
+    public TMP_Text countText;
 
     [HideInInspector] public Item item;
     [HideInInspector] public int count = 1;

@@ -71,6 +71,7 @@ public class BookInteraction : MonoBehaviour
 
     void ToggleDialogue()
     {
+        player.GetComponent<AnimatedMovement>().setDialogueState(true);
         dialogueCanvas.SetActive(!dialogueCanvas.activeSelf);
          if (dialogueCanvas.activeSelf)
         {
@@ -110,7 +111,7 @@ public class BookInteraction : MonoBehaviour
         currMessageInd = 0; // Reset to 0 after conversation is over. 
         book.SetActive(false);
         deactivateSpaceTab = true;
-        
+        player.GetComponent<AnimatedMovement>().setDialogueState(false);
     }
     void RemoveStump(){
         if (Input.GetKeyDown(KeyCode.R)){

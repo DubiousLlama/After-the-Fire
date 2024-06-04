@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GridHandler;
 using UnityEditor;
+using UnityEngine.Tilemaps;
 
 public class PuzzleManager : MonoBehaviour
 {
@@ -101,6 +102,14 @@ public class PuzzleManager : MonoBehaviour
             Debug.Log("No puzzle found");
             return false;
         }
+    }
+
+    public string getContent() {
+        PuzzleGridHandler c = puzzleDict[getClosest()].GetComponent<PuzzleGridHandler>();
+
+        Vector2 tile = c.PositionToTile(player.transform.position);
+
+        return c.GetContent((int)tile.x, (int)tile.y);
     }
 
     private Vector3 getClosest()

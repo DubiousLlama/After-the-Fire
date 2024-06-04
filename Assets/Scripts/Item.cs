@@ -17,7 +17,7 @@ public class Item : ScriptableObject
     public bool stackable = true;
 
     [Header("Both")]
-    public String plantName;
+    public string plantName;
     public Sprite image;
 }
 public enum ItemType {

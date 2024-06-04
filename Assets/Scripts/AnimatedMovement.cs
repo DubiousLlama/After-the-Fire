@@ -4,6 +4,7 @@ using UnityEngine;
 using GridHandler;
 using System.ComponentModel.Design;
 using System;
+using UnityEditor.UI;
 
 public class AnimatedMovement : MonoBehaviour
 {
@@ -45,25 +46,29 @@ public class AnimatedMovement : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-
-        if (!inDialogue) 
-            UpdateSprite();
         
+        if(!inDialogue)
+            UpdateSprite();
 
         //inventory controls
         if (!inDialogue && Input.inputString != null) {
             bool isNumber = int.TryParse(Input.inputString, out int number);
             if (isNumber && number > 0 && number < 8) {
                 invManager.ChangeSelectedSlot(number - 1);
-            }
-
-            if(Input.GetKeyDown(KeyCode.Space)) {
-                Item item = invManager.GetSelectedItem(false);
-                if (invManager.puzzleGrid.Place(item.name)) {
-                    invManager.GetSelectedItem(true);
+            } else if(Input.GetKeyDown(KeyCode.Space)) {
+                string plantedPlant = invManager.puzzleGrid.getContent();
+                if(plantedPlant != "out of bounds" && plantedPlant == "soil") {
+                    Item item = invManager.GetSelectedItem(false);
+                    if (invManager.puzzleGrid.Place(item.name)) {
+                        invManager.GetSelectedItem(true);
+                    }
                 }
-
-                Debug.Log(item.name);
+            } else if(Input.GetKeyDown(KeyCode.R)) {
+                string plantedPlant = invManager.puzzleGrid.getContent();
+                if(plantedPlant != "out of bounds" && plantedPlant != "soil") {
+                    invManager.puzzleGrid.Place("soil");
+                    invManager.AddItem(plantedPlant);
+                }
             }
         }
 
@@ -72,9 +77,10 @@ public class AnimatedMovement : MonoBehaviour
 
     void FixedUpdate() 
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-
-        CheckCollision();
+        if (!inDialogue) {
+            rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+            CheckCollision();
+        }
     }
 
     void UpdateSprite()
@@ -128,5 +134,9 @@ public class AnimatedMovement : MonoBehaviour
             //stop moving Y
             Debug.Log("stop y movement!");
         }
+    }
+
+    public void setDialogueState(bool state) {
+        inDialogue = state;
     }
 }

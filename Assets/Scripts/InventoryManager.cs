@@ -2,19 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GridHandler;
+using System;
 
 public class InventoryManager : MonoBehaviour
 {
-    public int maxStackSize = 4;
+    public int maxStackSize = 100;
     public InvSlot[] invSlots;
     public GameObject invItemPrefab;
     public PuzzleManager puzzleGrid;
     public Item[] itemsToStart;
+    public Item[] allPlants;
+    private Dictionary<string, Item> plants;
 
 
     int selectedSlot = -1;
 
     private void Awake() {
+        plants = new Dictionary<string, Item>();
+        foreach(Item i in allPlants){   
+            plants.Add(i.name, i);
+        }
+
         foreach(Item i in itemsToStart) {
             AddItem(i);
         }
@@ -38,7 +46,7 @@ public class InventoryManager : MonoBehaviour
      public bool AddItem(Item item) {
         for (int i = 0; i < invSlots.Length; i++) {
             InvSlot slot = invSlots[i];
-            Debug.Log(i);
+            // Debug.Log(i);
             InvItem itemInSlot = slot.GetComponentInChildren<InvItem>();
 
             if(itemInSlot != null && itemInSlot.item == item &&
@@ -59,6 +67,10 @@ public class InventoryManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public bool AddItem(string item) {
+        return AddItem(plants[item]);
     }
 
     void SpawnNewItem(Item item, InvSlot slot) {
