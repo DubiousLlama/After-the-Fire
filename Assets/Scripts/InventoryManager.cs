@@ -25,25 +25,10 @@ public class InventoryManager : MonoBehaviour
     }
 
     private void Update() {
-        if (Input.inputString != null) {
-
-            bool isNumber = int.TryParse(Input.inputString, out int number);
-            if (isNumber && number > 0 && number < 8) {
-                ChangeSelectedSlot(number - 1);
-            }
-
-            if(Input.GetKeyDown(KeyCode.Space)) {
-                Item item = GetSelectedItem(true);
-
-                puzzleGrid.Place(item.name);
-
-                Debug.Log(item.name);
-            }
-        }
-
+        
     }
 
-    void ChangeSelectedSlot(int newValue) {
+    public void ChangeSelectedSlot(int newValue) {
         if (selectedSlot > -1)
             invSlots[selectedSlot].Deselect();
         invSlots[newValue].Select();
