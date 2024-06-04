@@ -100,8 +100,10 @@ namespace GridHandler
             audioManager = FindObjectOfType<AudioManager>();
             inventoryManager = FindObjectOfType<InventoryManager>();
             dialogue = gameObject.GetComponent<InteractibleGeneric>();
-            Debug.Log(dialogue);
-            dialogue.messages = dialogueMessages;
+            if (dialogue != null)
+            {
+                dialogue.messages = dialogueMessages;
+            } 
         }
 
         private void Update()

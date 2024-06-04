@@ -45,9 +45,6 @@ public class PuzzleManager : MonoBehaviour
 
         PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
 
-        Debug.Log(distance);
-        Debug.Log(1f + ((c.width + c.height) / 2f * 0.639204f));
-
         if (c.plantRequired != "")
         {
             Transform pinepalm = reqCanvas.transform.Find("pinepalm");
