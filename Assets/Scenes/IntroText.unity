@@ -465,6 +465,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: sfx.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: music.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: ambiance.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: sfx.Array.data[6].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 960a4d011d08b42e8942b07e8a22ba59, type: 3}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: sfx.Array.data[6].name
+      value: First Spell
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: sfx.Array.data[7].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4d622732d25794a5aa86431f88587782, type: 3}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: sfx.Array.data[7].name
+      value: Book Power
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: music.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: f00439a58032dec4cb206d284cf19bc9, type: 3}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: music.Array.data[3].name
+      value: Peaceful
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: sfx.Array.data[6].volume
+      value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: sfx.Array.data[7].volume
+      value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: music.Array.data[3].volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: ambiance.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a6f3d459594064cce822a8d33037e37c, type: 3}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: ambiance.Array.data[1].name
+      value: Fire Sounds
+      objectReference: {fileID: 0}
+    - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
+      propertyPath: ambiance.Array.data[1].volume
+      value: 0.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
 --- !u!1 &1079476381
@@ -661,23 +721,66 @@ MonoBehaviour:
   introTextField: {fileID: 394383601}
   typeTextAnimation: 1
   introText:
-  - text: 'It is a period of civil wars in the galaxy. '
+  - text: Our home once thrived.
     time: 0
     isEnd: 0
-  - text: A brave alliance of underground freedom fighters has challenged the tyranny
-      and oppression of the awesome GALACTIC EMPIRE.
+  - text: We, the forest spirits, used our magic to help it flourish.
     time: 4
     isEnd: 0
-  - text: 'Striking from a fortress hidden among the billion stars of the galaxy,
-      rebel spaceships have won their first victory in a battle with the powerful
-      Imperial Starfleet. '
-    time: 9
-    isEnd: 0
-  - text: 
+  - text: 'The plants fed our magic, and our magic fed them. '
     time: 12
+    isEnd: 0
+  - text: My magic lessons had just begun.
+    time: 20
+    isEnd: 0
+  - text: "I don\u2019t know how it started. "
+    time: 25
+    isEnd: 0
+  - text: "A fire\u2026 Out of control. "
+    time: 30
+    isEnd: 0
+  - text: "It looked like everything was lost to the flames\u2026 "
+    time: 36
+    isEnd: 0
+  - text: The older spirits tried their best to stop the fire.
+    time: 44
+    isEnd: 0
+  - text: 'They sent me to the Book. '
+    time: 50
+    isEnd: 0
+  - text: "The history of our forest, our magic, everything lies within the Book.
+      Some say it knows the secrets of the forest\u2019s magic."
+    time: 55
+    isEnd: 0
+  - text: Its magic protected everything close to it.
+    time: 67
+    isEnd: 0
+  - text: 'That included me. '
+    time: 73
+    isEnd: 0
+  - text: "I\u2019ve never felt power like it. "
+    time: 78
+    isEnd: 0
+  - text: "It was too much. Everything went dark\u2026"
+    time: 83
+    isEnd: 0
+  - text: Game start
+    time: 90
     isEnd: 1
   introSounds:
   - sound: Peaceful
     soundType: 0
     playAtTime: 0
+    playForTime: 25
+  - sound: Fire Sounds
+    soundType: 1
+    playAtTime: 27
+    playForTime: 60
+  - sound: First Spell
+    soundType: 2
+    playAtTime: 21
     playForTime: 4
+  - sound: Book Power
+    soundType: 2
+    playAtTime: 66
+    playForTime: 20
