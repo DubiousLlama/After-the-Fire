@@ -5,6 +5,7 @@ using GridHandler;
 using System.ComponentModel.Design;
 using System;
 using UnityEditor.UI;
+using JetBrains.Annotations;
 
 public class AnimatedMovement : MonoBehaviour
 {
@@ -61,6 +62,15 @@ public class AnimatedMovement : MonoBehaviour
                     Item item = invManager.GetSelectedItem(false);
                     if (invManager.puzzleGrid.Place(item.name)) {
                         invManager.GetSelectedItem(true);
+                    }
+                } else if (plantedPlant != "out of bounds" && plantedPlant != "soil")
+                {
+                    Item item = invManager.GetSelectedItem(false);
+                    if (plantedPlant != item.name)
+                    {
+                        invManager.puzzleGrid.Place(item.name);
+                        invManager.GetSelectedItem(true);
+                        invManager.AddItem(plantedPlant);
                     }
                 }
             } else if(Input.GetKeyDown(KeyCode.R)) {
