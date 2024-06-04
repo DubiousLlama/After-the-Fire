@@ -21,18 +21,12 @@ public class Puzzle3Setup : MonoBehaviour
 
         // Set two of the cells to be blocked with a boulder
         //puzzleGridHandler.setTile(2, 0, infertileSoil);
-        puzzleGridHandler.setTile(3, 0, infertileSoil);
-        puzzleGridHandler.setTile(3, 1, infertileSoil);
-        puzzleGridHandler.setTile(0, 2, infertileSoil);
-        puzzleGridHandler.setTile(0, 1, infertileSoil);
-        puzzleGridHandler.setTile(1, 3, infertileSoil);
+        puzzleGridHandler.setTile(2, 1, richSoil);
         puzzleGridHandler.setTile(0, 0, infertileSoil);
         puzzleGridHandler.setTile(0, 1, infertileSoil);
-        puzzleGridHandler.setTile(0, 2, infertileSoil);
+        puzzleGridHandler.setTile(1, 1, infertileSoil);
         puzzleGridHandler.setTile(1, 2, infertileSoil);
-        puzzleGridHandler.setTile(1, 0, infertileSoil);
-        puzzleGridHandler.setTile(2, 0, infertileSoil);
-        puzzleGridHandler.setTile(2, 2, richSoil);
+        puzzleGridHandler.setTile(3, 0, infertileSoil);
 
 
     }

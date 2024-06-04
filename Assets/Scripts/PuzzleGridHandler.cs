@@ -147,6 +147,12 @@ namespace GridHandler
                 }
 
             }
+
+            // DEBUGGING: When the player presses the 'L' key, print the grid to the console
+            //if (Input.GetKeyDown(KeyCode.L))
+            //{
+            //    PrintGrid();
+            //}
         }
 
         // Define the names and types of all plants that can be placed on the grid
@@ -238,7 +244,7 @@ namespace GridHandler
             {
                 for (int j = 0; j < grid.GetWidth(); j++)
                 {
-                    if (grid.GetContent(j, i) == plant)
+                    if (grid.GetContent(i, j) == plant)
                     {
                         num += 1;
                     }
@@ -252,6 +258,11 @@ namespace GridHandler
         {
             // Get the player's position
             Vector3 playerPosition = player.transform.position;
+
+            if (isSolved)
+            {
+                return false;
+            }
 
             Vector2 tile = PositionToTile(playerPosition);
             if (tile.x == -1 && tile.y == -1)
@@ -298,6 +309,9 @@ namespace GridHandler
             grid.SetContent((int)tile.y, (int)tile.x, content);
             plants[(int)tile.y, (int)tile.x] = InstantiatePlant(content, (int)tile.x, (int)tile.y);
 
+            // Set the plant to be a child of the grid
+            plants[(int)tile.y, (int)tile.x].transform.parent = this.transform;
+
 
             Debug.Log("Debug Score: " + CalculateMana());
             // Play the long dig for trees and the short dig for bushes
@@ -316,6 +330,7 @@ namespace GridHandler
 
             grid.SetContent(y, x, content);
             plants[y, x] = InstantiatePlant(content, x, y);
+            plants[y, x].transform.parent = this.transform;
         }
 
         // Returns the content of the grid at the specified position
@@ -337,7 +352,7 @@ namespace GridHandler
             // Convert the grid position to a world position
             Vector3 position = new Vector3(this.transform.position.x + x * tileSize, this.transform.position.y + y * tileSize, -1);
 
-            Vector3 treeOffset = new Vector3(0, 0.25f, 0);
+            Vector3 treeOffset = new Vector3(0, 0.35f, 0);
 
             Vector3 plantOffset = new Vector3(0, 0.12f, 0);
 
