@@ -38,11 +38,12 @@ public class PuzzleManager : MonoBehaviour
 
     public void Update()
     {
-        // Get the distance between the player and the closest puzzle
+        // Get the distance between the player and the closest puzszle
         Vector3 closestPuzzle = getClosest();
 
         // Get the distance between the player and the closest puzzle
         float distance = Vector3.Distance(player.transform.position, closestPuzzle);
+        // Debug.Log(distance);
 
         PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
 
