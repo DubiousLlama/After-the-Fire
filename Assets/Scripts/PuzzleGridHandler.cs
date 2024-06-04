@@ -109,19 +109,43 @@ namespace GridHandler
         private void Update()
         {
             // Check if all requirements are met
-            if (CalculateMana() >= manaRequired && countType(plantRequired) >= plantRequiredAmount && !isSolved)
+            if (CalculateMana() >= manaRequired && !isSolved)
             {
-                // Reward the player
-                foreach (PlantReward reward in rewards)
+                if (plantRequired != "")
                 {
-                    for (int i = 0; i < reward.count; i++)
+                    if (countType(plantRequired) >= plantRequiredAmount)
                     {
-                        inventoryManager.AddItem(reward.item);
+                        // Reward the player
+                        foreach (PlantReward reward in rewards)
+                        {
+                            for (int i = 0; i < reward.count; i++)
+                            {
+                                inventoryManager.AddItem(reward.item);
+                            }
+                        }
+                        dialogue.ActivateDialogue();
+                        isSolved = true;
+                        Debug.Log("Puzzle Solved!");
                     }
                 }
-                dialogue.ToggleDialogue();
-                isSolved = true;
-                Debug.Log("Puzzle Solved!");
+                else
+                {
+                    // Reward the player
+                    foreach (PlantReward reward in rewards)
+                    {
+                        for (int i = 0; i < reward.count; i++)
+                        {
+                            inventoryManager.AddItem(reward.item);
+                        }
+                    }
+                    if (dialogue != null)
+                    {
+                        dialogue.ActivateDialogue();
+                    }
+                    isSolved = true;
+                    Debug.Log("Puzzle Solved!");
+                }
+
             }
         }
 

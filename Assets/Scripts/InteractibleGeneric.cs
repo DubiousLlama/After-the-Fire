@@ -6,7 +6,7 @@ using TMPro;
 public class InteractibleGeneric : MonoBehaviour
 {
     Transform player;
-    GameObject dialogueCanvas;
+    public GameObject dialogueCanvas;
     TMP_Text dialogueText;
 
     //Text info:
@@ -19,7 +19,6 @@ public class InteractibleGeneric : MonoBehaviour
 
     void Start()
     {
-        dialogueCanvas = GameObject.Find("DialogueCanvas");
         dialogueCanvas.SetActive(false);
         dialogueText = dialogueCanvas.GetComponentInChildren<TMP_Text>();
         player = GameObject.Find("Player").transform;
@@ -34,7 +33,17 @@ public class InteractibleGeneric : MonoBehaviour
             StopAllCoroutines(); // Stop any ongoing typing effect
             StartCoroutine(TypeText(messages[currMessageInd]));
         }
+        Debug.Log("Dialogue toggled");
     }
+    
+    public void ActivateDialogue()
+    {
+        dialogueCanvas.SetActive(true);
+        StartCoroutine(TypeText(messages[currMessageInd]));
+        Debug.Log("Dialogue activated");
+    }
+
+
     IEnumerator TypeText(string text)
     {
         dialogueText.text = ""; // Clear existing text
@@ -43,11 +52,13 @@ public class InteractibleGeneric : MonoBehaviour
             dialogueText.text += letter;
             yield return new WaitForSeconds(textSpeed); // Wait before showing the next character
         }
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
 
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+        
         if (++currMessageInd >= messages.Length)
         {
             DeactivateDialogue();
+            Debug.Log("Dialogue deactivated");
         }
         else if (currMessageInd == 3)
         { //Shows the book page: 
