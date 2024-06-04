@@ -5,9 +5,9 @@ using TMPro;
 
 public class InteractibleGeneric : MonoBehaviour
 {
-    public Transform player;
-    public GameObject dialogueCanvas;
-    public TMP_Text dialogueText;
+    Transform player;
+    GameObject dialogueCanvas;
+    TMP_Text dialogueText;
 
     //Text info:
     public string[] messages;
@@ -19,7 +19,10 @@ public class InteractibleGeneric : MonoBehaviour
 
     void Start()
     {
+        dialogueCanvas = GameObject.Find("DialogueCanvas");
         dialogueCanvas.SetActive(false);
+        dialogueText = dialogueCanvas.GetComponentInChildren<TMP_Text>();
+        player = GameObject.Find("Player").transform;
     }
 
 
