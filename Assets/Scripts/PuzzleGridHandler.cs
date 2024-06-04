@@ -37,14 +37,15 @@ namespace GridHandler
         public string plantRequired = "";
         public int plantRequiredAmount = 3;
 
-        
+        [Header("Solve Reward")]
+        public PlantReward[] rewards;
+        public string[] dialogueMessages;
 
         [Header("Prefabs")]
         public GameObject fertileSoil;
         public GameObject moonglow;
         public GameObject starleafTree;
         public GameObject pinepalm;
-        public GameObject starbloom;
         public GameObject bloomberry;
 
         private Dictionary<string, Plant> plantRef; // plant name -> plant object
@@ -57,7 +58,10 @@ namespace GridHandler
         public GameObject[,] tiles;
         private GameObject[,] plants;
         private AudioManager audioManager;
-        public TMP_Text manaScore;
+        private InventoryManager inventoryManager;
+        private InteractibleGeneric dialogue;
+
+        public bool isSolved = false;
 
 
         // Awake is called before the first frame update and before all Start functions
@@ -94,6 +98,29 @@ namespace GridHandler
         void Start()
         {
             audioManager = FindObjectOfType<AudioManager>();
+            inventoryManager = FindObjectOfType<InventoryManager>();
+            dialogue = gameObject.GetComponent<InteractibleGeneric>();
+            Debug.Log(dialogue);
+            dialogue.messages = dialogueMessages;
+        }
+
+        private void Update()
+        {
+            // Check if all requirements are met
+            if (CalculateMana() >= manaRequired && countType(plantRequired) >= plantRequiredAmount && !isSolved)
+            {
+                // Reward the player
+                foreach (PlantReward reward in rewards)
+                {
+                    for (int i = 0; i < reward.count; i++)
+                    {
+                        inventoryManager.AddItem(reward.item);
+                    }
+                }
+                dialogue.ToggleDialogue();
+                isSolved = true;
+                Debug.Log("Puzzle Solved!");
+            }
         }
 
         // Define the names and types of all plants that can be placed on the grid
@@ -245,19 +272,13 @@ namespace GridHandler
             grid.SetContent((int)tile.y, (int)tile.x, content);
             plants[(int)tile.y, (int)tile.x] = InstantiatePlant(content, (int)tile.x, (int)tile.y);
 
-            int currentMana = CalculateMana();
 
-            if (manaScore != null){
-                manaScore.text = currentMana.ToString();
-                Debug.Log("new manascore:" + manaScore.text);
-            }
             Debug.Log("Debug Score: " + CalculateMana());
             // Play the long dig for trees and the short dig for bushes
             if (plantRef[content].type == "tree")
                 audioManager.TriggerSFX("LongDig");
             else
                 audioManager.TriggerSFX("ShortDig");
-
             return true;
         }
 
@@ -311,8 +332,6 @@ namespace GridHandler
                     return Instantiate(pinepalm, position + plantOffset, Quaternion.identity);
                 case "bloomberry":
                     return Instantiate(bloomberry, position + plantOffset, Quaternion.identity);
-                case "starbloom":
-                    return Instantiate(starbloom, position, Quaternion.identity);
                 default:
                     return null;
             }
