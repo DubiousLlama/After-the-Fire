@@ -66,12 +66,16 @@ public class AnimatedMovement : MonoBehaviour
                 } else if (plantedPlant != "out of bounds" && plantedPlant != "soil")
                 {
                     Item item = invManager.GetSelectedItem(false);
-                    if (plantedPlant != item.name)
+                    if (item != null)
                     {
-                        invManager.puzzleGrid.Place(item.name);
-                        invManager.GetSelectedItem(true);
-                        invManager.AddItem(plantedPlant);
+                        if (plantedPlant != item.name)
+                        {
+                            invManager.puzzleGrid.Place(item.name);
+                            invManager.GetSelectedItem(true);
+                            invManager.AddItem(plantedPlant);
+                        }
                     }
+                    
                 }
             } else if(Input.GetKeyDown(KeyCode.R)) {
                 string plantedPlant = invManager.puzzleGrid.getContent();
