@@ -51,7 +51,7 @@ namespace GridHandler
         private Dictionary<string, Plant> plantRef; // plant name -> plant object
 
         private Grid grid;
-        private float tileSize = 0.639204f; // size of each tile in the grid
+        private float tileSize = 1f; // size of each tile in the grid
         private GameObject player;
 
         private Transform location;
