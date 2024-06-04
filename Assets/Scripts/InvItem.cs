@@ -19,6 +19,7 @@ public class InvItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
         item = newItem;
         image = GetComponent<Image>();
         image.sprite = newItem.image;
+        image.preserveAspect = true;
         RefreshCount();
     }
 
