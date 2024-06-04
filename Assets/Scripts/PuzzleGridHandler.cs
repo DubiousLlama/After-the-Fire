@@ -121,6 +121,7 @@ namespace GridHandler
                             for (int i = 0; i < reward.count; i++)
                             {
                                 inventoryManager.AddItem(reward.item);
+                                Debug.Log("Rewarding player with " + reward.item.name);
                             }
                         }
                         dialogue.ActivateDialogue();
@@ -136,6 +137,7 @@ namespace GridHandler
                         for (int i = 0; i < reward.count; i++)
                         {
                             inventoryManager.AddItem(reward.item);
+                            Debug.Log("Rewarding player with " + reward.item.name);
                         }
                     }
                     if (dialogue != null)
