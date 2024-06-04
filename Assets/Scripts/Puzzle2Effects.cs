@@ -10,6 +10,7 @@ public class Puzzle2Effects : MonoBehaviour
 
     public GameObject fireStump;
     public GameObject regStump;
+    public GameObject fireSound;
 
     PuzzleGridHandler puzzle;
     AudioManager audioManager;
@@ -31,10 +32,13 @@ public class Puzzle2Effects : MonoBehaviour
         {
             // Play the "Playful" music
             audioManager.StartMusicFade("Peaceful");
+            audioManager.TriggerSFX("Extinguish");
             effectsHappened = true;
 
             fireStump.SetActive(false);
             regStump.SetActive(true);
+            fireSound.SetActive(false);
+
         }
     }
 }

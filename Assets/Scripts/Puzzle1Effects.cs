@@ -8,6 +8,7 @@ using Audio;
 public class Puzzle1Effects : MonoBehaviour
 {
 
+    public GameObject fountainSound;
     PuzzleGridHandler puzzle;
     AudioManager audioManager;
 
@@ -28,6 +29,7 @@ public class Puzzle1Effects : MonoBehaviour
         {
             // Play the "Playful" music
             audioManager.StartMusicFade("Playful");
+            fountainSound.SetActive(true);
             effectsHappened = true;
         }
     }
