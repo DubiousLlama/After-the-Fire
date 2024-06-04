@@ -28,13 +28,16 @@ namespace GridHandler
     {
         // public string[,] setup = { { "soil", "soil", "soil" } };
 
+        [Header("Grid Size")]
         public int height = 1;
         public int width = 3;
 
-        Grid grid;
-        float tileSize = 1.0f; // size of each tile in the grid
+        [Header("Solve Requirements")]
+        public int manaRequired = 10;
+        public string plantRequired = "";
+        public int plantRequiredAmount = 3;
 
-        GameObject player;
+        
 
         [Header("Prefabs")]
         public GameObject fertileSoil;
@@ -44,8 +47,11 @@ namespace GridHandler
         public GameObject starbloom;
         public GameObject bloomberry;
 
-        Dictionary<string, Plant> plantRef; // plant name -> plant object
+        private Dictionary<string, Plant> plantRef; // plant name -> plant object
 
+        private Grid grid;
+        private float tileSize = 0.639204f; // size of each tile in the grid
+        private GameObject player;
 
         private Transform location;
         public GameObject[,] tiles;
@@ -84,7 +90,8 @@ namespace GridHandler
 
             // runTest();
         }
-    private void Start()
+
+        void Start()
         {
             audioManager = FindObjectOfType<AudioManager>();
         }
@@ -103,7 +110,6 @@ namespace GridHandler
         }
 
         // Checks to see that the grid initializes correctly and that the CalculateMana function works
-        
         public void setTile(int x, int y, GameObject tile)
         {
             # if UNITY_EDITOR
@@ -140,31 +146,61 @@ namespace GridHandler
         public int CalculateMana()
         {
             int mana = 0;
-            for (int i = 0; i < grid.GetHeight(); i++) {
-                for (int j = 0; j < grid.GetWidth(); j++) {
-                    string content = grid.GetContent(i, j);
-                    if (plantRef.TryGetValue(content, out Plant plant))
-                    {
-                        // Check if the tile is rich soil
-                        if (tiles[i,j].tag == "2x") {
-                            mana += plant.Score(j, i, grid, plantRef) * 2;
-                        }
-                        else
-                        {
-                            mana += plant.Score(j, i, grid, plantRef);
-                            // Debug.Log("Plant: " + plant.name + " at " + j.ToString() + ", " + i.ToString() + " with score " + plant.Score(j, i, grid, plantRef));
-                        }
-                    }
+            for (int i = 0; i < grid.GetHeight(); i++)
+            {
+                for (int j = 0; j < grid.GetWidth(); j++)
+                {
+                    mana += calculateManaAtPosition(i, j);
                 }
             }
             return mana;
         }
 
+        public int calculateManaAtPosition(int i, int j)
+        {   
+            int mana = 0;
+
+            string content = grid.GetContent(i, j);
+            if (plantRef.TryGetValue(content, out Plant plant))
+            {
+                // Check if the tile is rich soil
+                if (tiles[i, j].tag == "2x")
+                {
+                    mana += plant.Score(j, i, grid, plantRef) * 2;
+                }
+                else
+                {
+                    mana += plant.Score(j, i, grid, plantRef);
+                    // Debug.Log("Plant: " + plant.name + " at " + j.ToString() + ", " + i.ToString() + " with score " + plant.Score(j, i, grid, plantRef));
+                }
+            }
+            return mana;
+        }
+
+        public int countType(string plant)
+        {
+            // Count the number of grid cells matching the plant string
+            int num = 0;
+            for (int i = 0; i < grid.GetHeight(); i++)
+            {
+                for (int j = 0; j < grid.GetWidth(); j++)
+                {
+                    if (grid.GetContent(j, i) == plant)
+                    {
+                        num += 1;
+                    }
+                }
+            }
+            return num;
+        }
+
         // Places a plant on the grid at the player's current position
         public bool Place(string content)
         {
+            // Get the player's position
+            Vector3 playerPosition = player.transform.position;
 
-            Vector2 tile = PositionToTile();
+            Vector2 tile = PositionToTile(playerPosition);
             if (tile.x == -1 && tile.y == -1)
             {
                 Debug.Log("Player is not in the grid.");
@@ -282,23 +318,14 @@ namespace GridHandler
             }
         }
 
-        private void DestroyPlant(int x, int y)
-        {
-            Destroy(plants[y, x]);
-        }
-
         // Converts the player's position to a tile on the grid
-        private Vector2 PositionToTile()
+        public Vector2 PositionToTile(Vector3 position)
         {
-            if (player == null)
-                player = GameObject.Find("Player");
-
-            Vector3 playerPosition = player.transform.position;
             Vector2 notInGrid = new Vector2(-1, -1);
 
             // Find the player's position relative to the corner of the grid
-            float relativeX = playerPosition.x - this.transform.position.x + 0.5f * tileSize;
-            float relativeY = playerPosition.y - this.transform.position.y + 0.5f * tileSize;
+            float relativeX = position.x - this.transform.position.x + 0.5f * tileSize;
+            float relativeY = position.y - this.transform.position.y + 0.5f * tileSize;
 
             // Check if the player is inside the grid
             if (relativeX < 0 || relativeX >= grid.GetWidth() * tileSize || relativeY < 0 || relativeY >= grid.GetHeight() * tileSize)
