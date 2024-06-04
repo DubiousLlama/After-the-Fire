@@ -11,6 +11,7 @@ public class InventoryManager : MonoBehaviour
     public PuzzleManager puzzleGrid;
     public Item[] itemsToStart;
 
+
     int selectedSlot = -1;
 
     private void Awake() {
