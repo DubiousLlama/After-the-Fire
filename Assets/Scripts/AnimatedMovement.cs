@@ -9,9 +9,11 @@ public class AnimatedMovement : MonoBehaviour
 {
 
     PuzzleManager gridHandler;
+    InventoryManager invManager;
 
     [SerializeField]
     private BoxCollider2D z_BoxCollider;
+    private bool inDialogue;
 
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
@@ -21,13 +23,19 @@ public class AnimatedMovement : MonoBehaviour
     public Sprite spriteLeft;
     public Sprite spriteRight;
 
+    
     Vector2 movement;
 
+    void Awake() 
+    {
+        inDialogue = false;
+    }
 
     void Start()
     {
         // Get the grid handler
         gridHandler = GameObject.Find("PuzzleManager").GetComponent<PuzzleManager>();
+        invManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         z_BoxCollider = GetComponent<BoxCollider2D>();
     }
 
@@ -38,7 +46,28 @@ public class AnimatedMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        UpdateSprite();
+        if (!inDialogue) 
+            UpdateSprite();
+        
+
+        //inventory controls
+        if (!inDialogue && Input.inputString != null) {
+            bool isNumber = int.TryParse(Input.inputString, out int number);
+            if (isNumber && number > 0 && number < 8) {
+                invManager.ChangeSelectedSlot(number - 1);
+            }
+
+            if(Input.GetKeyDown(KeyCode.Space)) {
+                Item item = invManager.GetSelectedItem(false);
+                if (invManager.puzzleGrid.Place(item.name)) {
+                    invManager.GetSelectedItem(true);
+                }
+
+                Debug.Log(item.name);
+            }
+        }
+
+        
     }
 
     void FixedUpdate() 

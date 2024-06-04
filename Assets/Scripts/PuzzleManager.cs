@@ -86,7 +86,7 @@ public class PuzzleManager : MonoBehaviour
         }
     }
 
-    public void Place(string plant)
+    public bool Place(string plant)
     {
 
         Vector3 closestPuzzle = getClosest();
@@ -95,11 +95,12 @@ public class PuzzleManager : MonoBehaviour
 
         if (closestPuzzle != Vector3.zero)
         {
-            c.GetComponent<PuzzleGridHandler>().Place(plant);
+            return c.GetComponent<PuzzleGridHandler>().Place(plant);
         }
         else
         {
             Debug.Log("No puzzle found");
+            return false;
         }
     }
 
