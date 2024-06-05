@@ -178,7 +178,7 @@ MonoBehaviour:
     m_StyleName: Regular
     m_PointSize: 58
     m_Scale: 1
-    m_LineHeight: 43.5
+    m_LineHeight: 83.5
     m_AscentLine: 50.75
     m_CapLine: 51
     m_MeanLine: 43
@@ -2563,9 +2563,9 @@ MonoBehaviour:
     packingMode: 0
     atlasWidth: 512
     atlasHeight: 512
-    characterSetSelectionMode: 0
-    characterSequence: 32 - 126, 160, 8203, 8230, 9633
-    referencedFontAssetGUID: 
+    characterSetSelectionMode: 6
+    characterSequence: 20-7E,A0,2026
+    referencedFontAssetGUID: 4fe5f9b1cb44cab499c7606e7281d4ab
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0

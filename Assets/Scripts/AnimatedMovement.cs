@@ -154,4 +154,9 @@ public class AnimatedMovement : MonoBehaviour
     public void setDialogueState(bool state) {
         inDialogue = state;
     }
+
+    public bool getDialogueState()
+    {
+        return inDialogue;
+    }
 }

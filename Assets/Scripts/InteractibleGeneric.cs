@@ -8,6 +8,7 @@ public class InteractibleGeneric : MonoBehaviour
     Transform player;
     public GameObject dialogueCanvas;
     TMP_Text dialogueText;
+    AnimatedMovement playerMovement;
 
     //Text info:
     public string[] messages;
@@ -22,6 +23,7 @@ public class InteractibleGeneric : MonoBehaviour
         dialogueCanvas.SetActive(false);
         dialogueText = dialogueCanvas.GetComponentInChildren<TMP_Text>();
         player = GameObject.Find("Player").transform;
+        playerMovement = player.GetComponent<AnimatedMovement>();
     }
 
 
@@ -41,6 +43,7 @@ public class InteractibleGeneric : MonoBehaviour
         dialogueCanvas.SetActive(true);
         StartCoroutine(TypeText(messages[currMessageInd]));
         Debug.Log("Dialogue activated");
+        playerMovement.setDialogueState(true);
     }
 
 
@@ -74,6 +77,7 @@ public class InteractibleGeneric : MonoBehaviour
     public void DeactivateDialogue()
     {
         dialogueCanvas.SetActive(false);
+        playerMovement.setDialogueState(false);
         currMessageInd = 0; // Reset to 0 after conversation is over. 
 
     }

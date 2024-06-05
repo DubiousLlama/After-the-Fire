@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23efc62785281ed4ba9bff930fb4b595, type: 3}
   m_Name: moonglow
   m_EditorClassIdentifier: 
-  tile: {fileID: 0}
   type: 0
   actionType: 0
   range: {x: 5, y: 4}
   stackable: 1
+  plantName: moonglow
   image: {fileID: 21300000, guid: 560195e060c583b4ea2fcaf361355e1f, type: 3}

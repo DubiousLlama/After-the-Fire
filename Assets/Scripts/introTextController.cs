@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Audio;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class introTextController : MonoBehaviour
 {
@@ -38,8 +39,13 @@ public class introTextController : MonoBehaviour
         {
             if (newText.isEnd)
             {
-                // Move to the 'Tutorial' scene (UNCOMMENT WHEN SCENE IS CREATED)
-                // UnityEngine.SceneManagement.SceneManager.LoadScene("Tutorial");
+                AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+                foreach (AudioSource audioS in allAudioSources)
+                {
+                    audioS.Stop();
+                }
+                SceneManager.LoadScene("Tutorial");
+                // Get all aduiosources and stop them
                 introTextField.GetComponent<TextMeshProUGUI>().text = "";
                 return;
             }
@@ -54,7 +60,6 @@ public class introTextController : MonoBehaviour
             }
 
             currentText = newText;
-
         }
 
         introSoundObj newSound = GetIntroSound();
@@ -89,6 +94,21 @@ public class introTextController : MonoBehaviour
         }
 
         currentTime += Time.deltaTime;
+
+        #if UNITY_EDITOR
+        // If the player presses the spacebar, make the current time equal to the time of the next intro text object
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            foreach (introTextObj text in introText)
+            {
+                if (text.time > currentTime)
+                {
+                    currentTime = text.time;
+                    break;
+                }
+            }
+        }
+        #endif
 
     }
     private introSoundObj GetIntroSound()
