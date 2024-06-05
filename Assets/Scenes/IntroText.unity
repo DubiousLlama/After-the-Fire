@@ -488,7 +488,7 @@ PrefabInstance:
     - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
       propertyPath: sfx.Array.data[7].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 4d622732d25794a5aa86431f88587782, type: 3}
+      objectReference: {fileID: 8300000, guid: 3067a328e0936714fb1f22417202851b, type: 3}
     - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
       propertyPath: sfx.Array.data[7].name
       value: Book Power
