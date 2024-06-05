@@ -27,6 +27,8 @@ public class Puzzle4Setup : MonoBehaviour
         puzzleGridHandler.setTile(2, 2, infertileSoil);
         puzzleGridHandler.setTile(1, 1, richSoil);
 
+        puzzleGridHandler.PlaceAbsolute(1, 2, "bloomberry");
+
 
     }
 }

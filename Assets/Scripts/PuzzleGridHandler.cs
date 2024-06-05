@@ -28,30 +28,40 @@ namespace GridHandler
     {
         // public string[,] setup = { { "soil", "soil", "soil" } };
 
+        [Header("Grid Size")]
         public int height = 1;
         public int width = 3;
 
-        Grid grid;
-        float tileSize = 1.0f; // size of each tile in the grid
+        [Header("Solve Requirements")]
+        public int manaRequired = 10;
+        public string plantRequired = "";
+        public int plantRequiredAmount = 3;
 
-        GameObject player;
+        [Header("Solve Reward")]
+        public PlantReward[] rewards;
+        public string[] dialogueMessages;
 
         [Header("Prefabs")]
         public GameObject fertileSoil;
         public GameObject moonglow;
         public GameObject starleafTree;
         public GameObject pinepalm;
-        public GameObject starbloom;
         public GameObject bloomberry;
 
-        Dictionary<string, Plant> plantRef; // plant name -> plant object
+        private Dictionary<string, Plant> plantRef; // plant name -> plant object
 
+        private Grid grid;
+        private float tileSize = 1f; // size of each tile in the grid
+        private GameObject player;
 
         private Transform location;
         public GameObject[,] tiles;
         private GameObject[,] plants;
         private AudioManager audioManager;
-        public TMP_Text manaScore;
+        private InventoryManager inventoryManager;
+        private InteractibleGeneric dialogue;
+
+        public bool isSolved = false;
 
 
         // Awake is called before the first frame update and before all Start functions
@@ -84,9 +94,67 @@ namespace GridHandler
 
             // runTest();
         }
-    private void Start()
+
+        void Start()
         {
             audioManager = FindObjectOfType<AudioManager>();
+            inventoryManager = FindObjectOfType<InventoryManager>();
+            dialogue = gameObject.GetComponent<InteractibleGeneric>();
+            if (dialogue != null)
+            {
+                dialogue.messages = dialogueMessages;
+            } 
+        }
+
+        private void Update()
+        {
+            // Check if all requirements are met
+            if (CalculateMana() >= manaRequired && !isSolved)
+            {
+                if (plantRequired != "")
+                {
+                    if (countType(plantRequired) >= plantRequiredAmount)
+                    {
+                        // Reward the player
+                        foreach (PlantReward reward in rewards)
+                        {
+                            for (int i = 0; i < reward.count; i++)
+                            {
+                                inventoryManager.AddItem(reward.item);
+                                Debug.Log("Rewarding player with " + reward.item.name);
+                            }
+                        }
+                        dialogue.ActivateDialogue();
+                        isSolved = true;
+                        Debug.Log("Puzzle Solved!");
+                    }
+                }
+                else
+                {
+                    // Reward the player
+                    foreach (PlantReward reward in rewards)
+                    {
+                        for (int i = 0; i < reward.count; i++)
+                        {
+                            inventoryManager.AddItem(reward.item);
+                            Debug.Log("Rewarding player with " + reward.item.name);
+                        }
+                    }
+                    if (dialogue != null)
+                    {
+                        dialogue.ActivateDialogue();
+                    }
+                    isSolved = true;
+                    Debug.Log("Puzzle Solved!");
+                }
+
+            }
+
+            // DEBUGGING: When the player presses the 'L' key, print the grid to the console
+            //if (Input.GetKeyDown(KeyCode.L))
+            //{
+            //    PrintGrid();
+            //}
         }
 
         // Define the names and types of all plants that can be placed on the grid
@@ -103,7 +171,6 @@ namespace GridHandler
         }
 
         // Checks to see that the grid initializes correctly and that the CalculateMana function works
-        
         public void setTile(int x, int y, GameObject tile)
         {
             # if UNITY_EDITOR
@@ -140,31 +207,66 @@ namespace GridHandler
         public int CalculateMana()
         {
             int mana = 0;
-            for (int i = 0; i < grid.GetHeight(); i++) {
-                for (int j = 0; j < grid.GetWidth(); j++) {
-                    string content = grid.GetContent(i, j);
-                    if (plantRef.TryGetValue(content, out Plant plant))
-                    {
-                        // Check if the tile is rich soil
-                        if (tiles[i,j].tag == "2x") {
-                            mana += plant.Score(j, i, grid, plantRef) * 2;
-                        }
-                        else
-                        {
-                            mana += plant.Score(j, i, grid, plantRef);
-                            // Debug.Log("Plant: " + plant.name + " at " + j.ToString() + ", " + i.ToString() + " with score " + plant.Score(j, i, grid, plantRef));
-                        }
-                    }
+            for (int i = 0; i < grid.GetHeight(); i++)
+            {
+                for (int j = 0; j < grid.GetWidth(); j++)
+                {
+                    mana += calculateManaAtPosition(i, j);
                 }
             }
             return mana;
         }
 
+        public int calculateManaAtPosition(int i, int j)
+        {   
+            int mana = 0;
+
+            string content = grid.GetContent(i, j);
+            if (plantRef.TryGetValue(content, out Plant plant))
+            {
+                // Check if the tile is rich soil
+                if (tiles[i, j].tag == "2x")
+                {
+                    mana += plant.Score(j, i, grid, plantRef) * 2;
+                }
+                else
+                {
+                    mana += plant.Score(j, i, grid, plantRef);
+                    // Debug.Log("Plant: " + plant.name + " at " + j.ToString() + ", " + i.ToString() + " with score " + plant.Score(j, i, grid, plantRef));
+                }
+            }
+            return mana;
+        }
+
+        public int countType(string plant)
+        {
+            // Count the number of grid cells matching the plant string
+            int num = 0;
+            for (int i = 0; i < grid.GetHeight(); i++)
+            {
+                for (int j = 0; j < grid.GetWidth(); j++)
+                {
+                    if (grid.GetContent(i, j) == plant)
+                    {
+                        num += 1;
+                    }
+                }
+            }
+            return num;
+        }
+
         // Places a plant on the grid at the player's current position
         public bool Place(string content)
         {
+            // Get the player's position
+            Vector3 playerPosition = player.transform.position;
 
-            Vector2 tile = PositionToTile();
+            if (isSolved)
+            {
+                return false;
+            }
+
+            Vector2 tile = PositionToTile(playerPosition);
             if (tile.x == -1 && tile.y == -1)
             {
                 Debug.Log("Player is not in the grid.");
@@ -209,19 +311,16 @@ namespace GridHandler
             grid.SetContent((int)tile.y, (int)tile.x, content);
             plants[(int)tile.y, (int)tile.x] = InstantiatePlant(content, (int)tile.x, (int)tile.y);
 
-            int currentMana = CalculateMana();
+            // Set the plant to be a child of the grid
+            plants[(int)tile.y, (int)tile.x].transform.parent = this.transform;
 
-            if (manaScore != null){
-                manaScore.text = currentMana.ToString();
-                Debug.Log("new manascore:" + manaScore.text);
-            }
+
             Debug.Log("Debug Score: " + CalculateMana());
             // Play the long dig for trees and the short dig for bushes
             if (plantRef[content].type == "tree")
                 audioManager.TriggerSFX("LongDig");
             else
                 audioManager.TriggerSFX("ShortDig");
-
             return true;
         }
 
@@ -233,6 +332,7 @@ namespace GridHandler
 
             grid.SetContent(y, x, content);
             plants[y, x] = InstantiatePlant(content, x, y);
+            plants[y, x].transform.parent = this.transform;
         }
 
         // Returns the content of the grid at the specified position
@@ -254,7 +354,7 @@ namespace GridHandler
             // Convert the grid position to a world position
             Vector3 position = new Vector3(this.transform.position.x + x * tileSize, this.transform.position.y + y * tileSize, -1);
 
-            Vector3 treeOffset = new Vector3(0, 0.25f, 0);
+            Vector3 treeOffset = new Vector3(0, 0.35f, 0);
 
             Vector3 plantOffset = new Vector3(0, 0.12f, 0);
 
@@ -275,30 +375,19 @@ namespace GridHandler
                     return Instantiate(pinepalm, position + plantOffset, Quaternion.identity);
                 case "bloomberry":
                     return Instantiate(bloomberry, position + plantOffset, Quaternion.identity);
-                case "starbloom":
-                    return Instantiate(starbloom, position, Quaternion.identity);
                 default:
                     return null;
             }
         }
 
-        private void DestroyPlant(int x, int y)
-        {
-            Destroy(plants[y, x]);
-        }
-
         // Converts the player's position to a tile on the grid
-        private Vector2 PositionToTile()
+        public Vector2 PositionToTile(Vector3 position)
         {
-            if (player == null)
-                player = GameObject.Find("Player");
-
-            Vector3 playerPosition = player.transform.position;
             Vector2 notInGrid = new Vector2(-1, -1);
 
             // Find the player's position relative to the corner of the grid
-            float relativeX = playerPosition.x - this.transform.position.x + 0.5f * tileSize;
-            float relativeY = playerPosition.y - this.transform.position.y + 0.5f * tileSize;
+            float relativeX = position.x - this.transform.position.x + 0.5f * tileSize;
+            float relativeY = position.y - this.transform.position.y + 0.5f * tileSize;
 
             // Check if the player is inside the grid
             if (relativeX < 0 || relativeX >= grid.GetWidth() * tileSize || relativeY < 0 || relativeY >= grid.GetHeight() * tileSize)
