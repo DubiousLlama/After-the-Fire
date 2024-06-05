@@ -19,7 +19,10 @@ public class BookInteraction : MonoBehaviour
         "I wonder if it retained its seeds. Let's open it and see...",
         "...",
         "Only one seed survived... The book lost most of its healing properties.",
-        "I need to make more mana to find the missing seeds."
+        "I need to make more mana to find the missing seeds.",
+        "You can place plants by pressing the number keys 1-4 to select the plant and then pressing space to place it.",
+        "You can remove plants by pressing R.",
+        "Removed and replaced plants will return to your inventory."
     };
     private int currMessageInd = 0;
     public float textSpeed = 0.05f; // Speed at which text appears

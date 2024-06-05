@@ -62,6 +62,7 @@ public class AnimatedMovement : MonoBehaviour
                     Item item = invManager.GetSelectedItem(false);
                     if (invManager.puzzleGrid.Place(item.name)) {
                         invManager.GetSelectedItem(true);
+                        Debug.Log("Planted " + item.name + " in soil");
                     }
                 } else if (plantedPlant != "out of bounds" && plantedPlant != "soil")
                 {

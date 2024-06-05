@@ -88,14 +88,13 @@ public class InventoryManager : MonoBehaviour
         InvSlot slot = invSlots[selectedSlot];
         InvItem itemInSlot = slot.GetComponentInChildren<InvItem>();
 
-        Debug.Log(itemInSlot == null);
-
         if(itemInSlot != null) {
             Item item = itemInSlot.item;
             if(use == true) {
                 itemInSlot.count--;
                 if(itemInSlot.count <= 0) {
                     Destroy(itemInSlot.gameObject);
+                    itemInSlot.item = null;
                 } else {
                     itemInSlot.RefreshCount();
                 }
