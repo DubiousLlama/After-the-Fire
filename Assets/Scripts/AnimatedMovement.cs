@@ -65,7 +65,7 @@ public class AnimatedMovement : MonoBehaviour
                         invManager.GetSelectedItem(true);
                         Debug.Log("Finished calling GetSelectedItem on" + item.name);
                     }
-                } else if (plantedPlant != "out of bounds" && plantedPlant != "soil")
+                } else if (plantedPlant != "out of bounds" && plantedPlant != "soil" && plantedPlant != "infertileSoil")
                 {
                     Item item = invManager.GetSelectedItem(false);
                     if (item != null)

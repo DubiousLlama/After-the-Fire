@@ -18,7 +18,6 @@ public class PuzzleManager : MonoBehaviour
 
     void Start()
     {
-        reqCanvas = GameObject.Find("ReqCanvas");
 
         foreach (GameObject puzzle in puzzleList)
         {
