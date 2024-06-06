@@ -33,9 +33,6 @@ namespace GridHandler
         public int height = 1;
         public int width = 3;
 
-        [Header("GUI Reference")]
-        public GameObject reqCanvas;
-
         [Header("Solve Requirements")]
         public int manaRequired = 10;
         public string plantRequired = "";
@@ -182,6 +179,11 @@ namespace GridHandler
             // Instantiate the objects as children of this gameobject
             tiles[y, x] = Instantiate(tile, this.transform);
             tiles[y, x].transform.position = new Vector3(this.transform.position.x + x * tileSize, this.transform.position.y + y * tileSize, 0);
+
+            if (tile.tag == "infertileSoil")
+            {
+                grid.SetContent(y, x, "infertileSoil");
+            }
         }
 
 
