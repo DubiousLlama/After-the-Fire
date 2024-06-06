@@ -109,7 +109,7 @@ namespace GridHandler
         private void Update()
         {
             // Check if all requirements are met
-            if (CalculateMana() >= manaRequired && !isSolved)
+            if (!isSolved && CalculateMana() >= manaRequired)
             {
                 if (plantRequired != "")
                 {
