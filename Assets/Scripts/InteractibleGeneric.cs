@@ -81,4 +81,24 @@ public class InteractibleGeneric : MonoBehaviour
         currMessageInd = 0; // Reset to 0 after conversation is over. 
 
     }
+
+    IEnumerator SingleMessage(string text) {
+        dialogueText.text = ""; // Clear existing text
+        foreach (char letter in text.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(textSpeed); // Wait before showing the next character
+        }
+
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+
+        DeactivateDialogue();
+        Debug.Log("Dialogue deactivated");
+    }
+
+    public void PlayMessage(string text) {
+        dialogueCanvas.SetActive(true);
+        playerMovement.setDialogueState(true); 
+        StartCoroutine(SingleMessage(text));
+    }
 }
