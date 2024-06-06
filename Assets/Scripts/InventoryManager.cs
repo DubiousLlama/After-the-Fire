@@ -93,15 +93,17 @@ public class InventoryManager : MonoBehaviour
             if(use == true) {
                 itemInSlot.count--;
                 if(itemInSlot.count <= 0) {
-                    Destroy(itemInSlot.gameObject);
-                    itemInSlot.item = null;
+                    Debug.Log("bouta destroy this object");
+                    DestroyImmediate(itemInSlot.gameObject);
+                    Debug.Log("already destroyed this object");
+                    Debug.Log(itemInSlot);
+                    // itemInSlot.item = null;
                 } else {
                     itemInSlot.RefreshCount();
                 }
             }
-            return itemInSlot.item;
+            return item;
         }
-
         return null;
     }
 }

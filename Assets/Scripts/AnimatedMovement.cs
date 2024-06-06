@@ -60,9 +60,10 @@ public class AnimatedMovement : MonoBehaviour
                 string plantedPlant = invManager.puzzleGrid.getContent();
                 if(plantedPlant != "out of bounds" && plantedPlant == "soil") {
                     Item item = invManager.GetSelectedItem(false);
-                    if (invManager.puzzleGrid.Place(item.name)) {
+                    if (item != null && invManager.puzzleGrid.Place(item.name)) {
+                        Debug.Log("About to call GetSelectedItem to pick up plant " + item.name);
                         invManager.GetSelectedItem(true);
-                        Debug.Log("Planted " + item.name + " in soil");
+                        Debug.Log("Finished calling GetSelectedItem on" + item.name);
                     }
                 } else if (plantedPlant != "out of bounds" && plantedPlant != "soil")
                 {
