@@ -29,7 +29,7 @@ namespace Audio
 
         private void Start()
         {
-            StartMusicNow("Pensive");
+            // StartMusicNow("Pensive");
         }
 
         private void Update()
@@ -42,7 +42,7 @@ namespace Audio
             }
 
             // Loop the current music and ambiance tracks when they run out
-            if (!musicSource.isPlaying)
+            if (!musicSource.isPlaying && currentlyPlaying != null)
             {
                 StartMusicNow(currentlyPlaying);
             }
@@ -126,7 +126,12 @@ namespace Audio
             StartCoroutine(FadeIn(musicSource, 3f));
         }
 
-        private IEnumerator FadeOut(AudioSource source, float fadeTime)
+        public void FadeOutMusic(float time)
+        {
+            StartCoroutine(FadeOut(musicSource, time, false));
+        }
+
+        private IEnumerator FadeOut(AudioSource source, float fadeTime, bool destroySource=true)
         {
             float startVolume = source.volume;
 
@@ -138,7 +143,11 @@ namespace Audio
 
             source.Stop();
             source.volume = startVolume;
-            Destroy(source);
+            currentlyPlaying = null;
+            if (destroySource)
+            {
+                Destroy(source);
+            }
         }
 
         private IEnumerator FadeIn(AudioSource source, float fadeTime)

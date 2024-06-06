@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "After-the-Fire.sln"
+    "dotnet.defaultSolution": "After-the-Fire-1.sln"
 }
