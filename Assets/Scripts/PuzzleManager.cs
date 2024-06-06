@@ -113,6 +113,12 @@ public class PuzzleManager : MonoBehaviour
         return c.GetContent((int)tile.x, (int)tile.y);
     }
 
+    public bool checkSolved() {
+        PuzzleGridHandler c = puzzleDict[getClosest()].GetComponent<PuzzleGridHandler>();
+
+        return c.isSolved;
+    }
+
     private Vector3 getClosest()
     {
         // Call the Place function of the puzzle the player is closest to
