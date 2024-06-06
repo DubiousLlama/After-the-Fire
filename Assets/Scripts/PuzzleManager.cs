@@ -4,6 +4,7 @@ using UnityEngine;
 using GridHandler;
 using UnityEditor;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class PuzzleManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class PuzzleManager : MonoBehaviour
 
     GameObject player;
 
-    ReferenceGUI active;
+    ReferenceGUI activeGUI;
 
     void Start()
     {
@@ -49,23 +50,42 @@ public class PuzzleManager : MonoBehaviour
 
         if (g != null)
         {
-            //If the player is close enough to the puzzle, display the requirements
+            // If we are close enough to the closest puzzle
             if (distance < 1f + ((c.width + c.height) / 2f * 0.639204f))
             {
-                if (g.visible == false)
+                if (activeGUI != g)
+                {
+                    if (activeGUI != null)
+                    {
+                        activeGUI.toggleGUI();
+                    }
+                }
+
+                if (!g.visible)
                 {
                     g.toggleGUI();
-                    active = g;
+                    activeGUI = g;
                 }
             }
             else
             {
-                if (g.visible == true)
+                if (g.visible)
                 {
                     g.toggleGUI();
+                    activeGUI = null;
                 }
             }
         }
+
+
+
+            
+
+
+
+
+
+   
 
     }
 
