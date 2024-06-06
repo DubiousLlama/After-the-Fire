@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GridHandler;
+using Unity.VisualScripting;
 
 public class ReferenceGUI : MonoBehaviour
 {
@@ -9,16 +10,24 @@ public class ReferenceGUI : MonoBehaviour
     // Get the PuzzleGridHandler script attached to the same game object
     PuzzleGridHandler pgh;
 
-    public GameObject reqCanvas;
+    public GameObject GUI;
+
+    Canvas canvas;
 
     GameObject activeCanvas = null;
 
+    RectTransform activeRect = null;
+
     bool animating = false;
+
+    float animationTarget;
 
     // Start is called before the first frame update
     void Start()
     {
         pgh = GetComponent<PuzzleGridHandler>();
+        // Find the canvas object in the scene
+        canvas = GameObject.Find("ReqCanvas").GetComponent<Canvas>();
         toggleGUI();
     }
 
@@ -31,6 +40,55 @@ public class ReferenceGUI : MonoBehaviour
             toggleGUI();
         }
 
+        //if (activeCanvas != null)
+        //{
+        //    if (activeRect == null)
+        //    {
+        //        activeRect = activeCanvas.GetComponent<RectTransform>();
+        //    }
+        //    if (animating)
+        //    {
+        //        activeRect.anchoredPosition = new Vector2((float)expDecay(activeRect.anchoredPosition.x, animationTarget, 2000f, Time.deltaTime), 0);
+        //        Debug.Log("X pos: " + activeRect.anchoredPosition.x.ToString());
+        //        if (Mathf.Abs(activeRect.anchoredPosition.x - animationTarget) < 5f)
+        //        {
+        //            animating = false;
+        //            if (animationTarget == 200)
+        //            {
+        //                Destroy(activeCanvas);
+        //                activeCanvas = null;
+        //                activeRect = null;
+        //            }
+        //        }
+        //    }
+        //}
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (activeCanvas != null)
+        {
+            if (activeRect == null)
+            {
+                activeRect = activeCanvas.GetComponent<RectTransform>();
+            }
+            if (animating)
+            {
+                activeRect.anchoredPosition = new Vector2(Mathf.Lerp(activeRect.anchoredPosition.x, animationTarget, 0.05f), 0);
+                Debug.Log("X pos: " + activeRect.anchoredPosition.x.ToString());
+                if (Mathf.Abs(activeRect.anchoredPosition.x - animationTarget) < 20f)
+                {
+                    animating = false;
+                    if (animationTarget == 200)
+                    {
+                        Destroy(activeCanvas);
+                        activeCanvas = null;
+                        activeRect = null;
+                    }
+                }
+            }
+        }
     }
 
     // If the GUI is not active, enable it and have it slide in from the right
@@ -44,50 +102,26 @@ public class ReferenceGUI : MonoBehaviour
 
         if (activeCanvas == null)
         {
-            activeCanvas = Instantiate(reqCanvas, new Vector3(0, 0, 0), Quaternion.identity);
-            activeCanvas.transform.GetChild(0).transform.position = new Vector3(200, 0, 0);
+            activeCanvas = Instantiate(GUI, new Vector3(0, 0, 0), Quaternion.identity);
+            activeRect = activeCanvas.GetComponent<RectTransform>();
+            activeCanvas.transform.SetParent(canvas.transform, false);
+            activeRect.anchoredPosition = new Vector2(200, 0);
+
             animating = true;
-            StartCoroutine(slideIn(activeCanvas));
+            animationTarget = -20;
             return true;
         }
         else
         {
             animating = true;
-            StartCoroutine(slideOut(activeCanvas));
+            animationTarget = 200;
             return true;
         } 
     }
 
-    private IEnumerator slideIn(GameObject reqCanvas, float speed=16.0f)
+    private double expDecay(double a, double b, double decay, double dt)
     {
-        Transform position = activeCanvas.transform.GetChild(0).transform;
-        while (position.position.x > 1)
-        {
-            position.position = new Vector3(expDecay(position.position.x, 0, speed, Time.deltaTime), 0, 0);
-            yield return null;
-        }
-        position.position = new Vector3(0, 0, 0);
-        animating = false;
-        yield return null;
-    }
-
-    private IEnumerator slideOut(GameObject reqCanvas, float speed = 16.0f)
-    {
-        Transform position = activeCanvas.transform.GetChild(0).transform;
-        while (position.position.x < 180)
-        {
-            position.position = new Vector3(expDecay(position.position.x, 180, speed, Time.deltaTime), 0, 0);
-            yield return null;
-        }
-        Destroy(activeCanvas);
-        activeCanvas = null;
-        animating = false;
-        yield return null;
-    }
-
-    private float expDecay(float a, float b, float decay, float dt)
-    {
-        return a + (b - a) * Mathf.Exp(-decay * dt);
+        return a + (b - a) * System.Math.Exp(-decay * dt);
     }
 
 
