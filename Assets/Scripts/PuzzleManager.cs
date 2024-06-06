@@ -36,56 +36,56 @@ public class PuzzleManager : MonoBehaviour
         player = GameObject.Find("Player");
     }
 
-    public void Update()
-    {
-        // Get the distance between the player and the closest puzszle
-        Vector3 closestPuzzle = getClosest();
+    //public void Update()
+    //{
+    //    // Get the distance between the player and the closest puzszle
+    //    Vector3 closestPuzzle = getClosest();
 
-        // Get the distance between the player and the closest puzzle
-        float distance = Vector3.Distance(player.transform.position, closestPuzzle);
-        // Debug.Log(distance);
+    //    // Get the distance between the player and the closest puzzle
+    //    float distance = Vector3.Distance(player.transform.position, closestPuzzle);
+    //    // Debug.Log(distance);
 
-        PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
+    //    PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
 
-        if (c.plantRequired != "")
-        {
-            Transform pinepalm = reqCanvas.transform.Find("pinepalm");
-            Transform pinepalmText = reqCanvas.transform.Find("pinepalmtext");
+    //    if (c.plantRequired != "")
+    //    {
+    //        Transform pinepalm = reqCanvas.transform.Find("pinepalm");
+    //        Transform pinepalmText = reqCanvas.transform.Find("pinepalmtext");
 
-            pinepalm.gameObject.SetActive(true);
-            pinepalmText.gameObject.SetActive(true);
+    //        pinepalm.gameObject.SetActive(true);
+    //        pinepalmText.gameObject.SetActive(true);
 
-            int pinepalmsCurrent = c.countType(c.plantRequired);
+    //        int pinepalmsCurrent = c.countType(c.plantRequired);
 
-            pinepalmText.GetComponent<TMPro.TextMeshProUGUI>().text = pinepalmsCurrent.ToString() + "/" + c.plantRequiredAmount.ToString();
+    //        pinepalmText.GetComponent<TMPro.TextMeshProUGUI>().text = pinepalmsCurrent.ToString() + "/" + c.plantRequiredAmount.ToString();
 
-        }
-        else
-        {
-            reqCanvas.transform.Find("pinepalm").gameObject.SetActive(false); 
-            reqCanvas.transform.Find("pinepalmtext").gameObject.SetActive(false);
-        }
+    //    }
+    //    else
+    //    {
+    //        reqCanvas.transform.Find("pinepalm").gameObject.SetActive(false); 
+    //        reqCanvas.transform.Find("pinepalmtext").gameObject.SetActive(false);
+    //    }
 
-        //If the player is close enough to the puzzle, display the requirements
-        if (distance < 1f + ((c.width + c.height) / 2f * 0.639204f))
-        {
+    //    //If the player is close enough to the puzzle, display the requirements
+    //    if (distance < 1f + ((c.width + c.height) / 2f * 0.639204f))
+    //    {
 
-            // Display the requirements
-            reqCanvas.SetActive(true);
+    //        // Display the requirements
+    //        reqCanvas.SetActive(true);
 
-            int manaRequired = c.manaRequired;
+    //        int manaRequired = c.manaRequired;
 
-            int manacurrent = c.CalculateMana();
+    //        int manacurrent = c.CalculateMana();
 
-            // set the text of the TMPro object to the plant name
-            reqCanvas.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = manacurrent.ToString() + "/" + manaRequired.ToString();
-        }
-        else
-        {
-            // Hide the requirements
-            reqCanvas.SetActive(false);
-        }
-    }
+    //        // set the text of the TMPro object to the plant name
+    //        reqCanvas.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = manacurrent.ToString() + "/" + manaRequired.ToString();
+    //    }
+    //    else
+    //    {
+    //        // Hide the requirements
+    //        reqCanvas.SetActive(false);
+    //    }
+    //}
 
     public bool Place(string plant)
     {
