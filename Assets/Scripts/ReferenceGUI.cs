@@ -22,46 +22,34 @@ public class ReferenceGUI : MonoBehaviour
 
     float animationTarget;
 
+    public bool visible = false;
+
     // Start is called before the first frame update
     void Start()
     {
         pgh = GetComponent<PuzzleGridHandler>();
         // Find the canvas object in the scene
         canvas = GameObject.Find("ReqCanvas").GetComponent<Canvas>();
-        toggleGUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        // When the player presses the "E" key, toggle the GUI
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            toggleGUI();
-        }
 
-        //if (activeCanvas != null)
-        //{
-        //    if (activeRect == null)
-        //    {
-        //        activeRect = activeCanvas.GetComponent<RectTransform>();
-        //    }
-        //    if (animating)
-        //    {
-        //        activeRect.anchoredPosition = new Vector2((float)expDecay(activeRect.anchoredPosition.x, animationTarget, 2000f, Time.deltaTime), 0);
-        //        Debug.Log("X pos: " + activeRect.anchoredPosition.x.ToString());
-        //        if (Mathf.Abs(activeRect.anchoredPosition.x - animationTarget) < 5f)
-        //        {
-        //            animating = false;
-        //            if (animationTarget == 200)
-        //            {
-        //                Destroy(activeCanvas);
-        //                activeCanvas = null;
-        //                activeRect = null;
-        //            }
-        //        }
-        //    }
-        //}
+        if (activeCanvas != null)
+        {
+            int manaRequired = pgh.manaRequired;
+
+            int manacurrent = pgh.CalculateMana();
+
+            // set the text of the TMPro object to the plant name
+            activeCanvas.transform.Find("manatext").GetComponent<TMPro.TextMeshProUGUI>().text = manacurrent.ToString() + "/" + manaRequired.ToString();
+
+            // If the puzzle requires a specific plant, update that as well
+            if (pgh.plantRequired != "")
+            {
+                activeCanvas.transform.Find("pinepalmtext").GetComponent<TMPro.TextMeshProUGUI>().text = pgh.countType(pgh.plantRequired).ToString() + "/" + pgh.plantRequiredAmount.ToString();
+            }
+        }
 
     }
 
@@ -75,7 +63,7 @@ public class ReferenceGUI : MonoBehaviour
             }
             if (animating)
             {
-                activeRect.anchoredPosition = new Vector2(Mathf.Lerp(activeRect.anchoredPosition.x, animationTarget, 0.05f), 0);
+                activeRect.anchoredPosition = new Vector2(Mathf.Lerp(activeRect.anchoredPosition.x, animationTarget, 0.07f), 0);
                 Debug.Log("X pos: " + activeRect.anchoredPosition.x.ToString());
                 if (Mathf.Abs(activeRect.anchoredPosition.x - animationTarget) < 20f)
                 {
@@ -108,21 +96,16 @@ public class ReferenceGUI : MonoBehaviour
             activeRect.anchoredPosition = new Vector2(200, 0);
 
             animating = true;
+            visible = true;
             animationTarget = -20;
             return true;
         }
         else
         {
             animating = true;
+            visible = false;
             animationTarget = 200;
             return true;
-        } 
+        }
     }
-
-    private double expDecay(double a, double b, double decay, double dt)
-    {
-        return a + (b - a) * System.Math.Exp(-decay * dt);
-    }
-
-
 }
