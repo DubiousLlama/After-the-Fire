@@ -78,7 +78,7 @@ public class PuzzleManager : MonoBehaviour
 
         if (closestPuzzle != Vector3.zero)
         {
-            return c.GetComponent<PuzzleGridHandler>().Place(plant);
+            return c.Place(plant);
         }
         else
         {
