@@ -103,7 +103,7 @@ public class BookInteraction : MonoBehaviour
             dialogueCanvas.SetActive(false);
             dialogueSpaceBar.SetActive(false);
             bookPageCanvas.SetActive(true);
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
 
         }else{
             StartCoroutine(TypeText(messages[currMessageInd]));
