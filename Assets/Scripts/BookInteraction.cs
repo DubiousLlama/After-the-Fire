@@ -7,7 +7,7 @@ public class BookInteraction : MonoBehaviour
 {
     public Transform player;
     public GameObject book;
-    public GameObject spaceTab;
+    public GameObject E_key;
     public float activationRadius = 5.0f; //Radius where spacteTab will apear
     public GameObject dialogueCanvas; 
     public TMP_Text dialogueText;
@@ -20,16 +20,14 @@ public class BookInteraction : MonoBehaviour
         "...",
         "Only one seed survived... The book lost most of its healing properties.",
         "I need to make more mana to find the missing seeds.",
-        "You can place plants by pressing the number keys 1-4 to select the plant and then pressing space to place it.",
-        "You can remove plants by pressing R.",
-        "Removed and replaced plants will return to your inventory."
     };
     private int currMessageInd = 0;
     public float textSpeed = 0.05f; // Speed at which text appears
     public GameObject dialogueSpaceBar; //SpaceTab for dialogue:
-    private bool deactivateSpaceTab; //Deactivates spacetab at the end of dialogue
-    public GameObject removeInstructionsCanvas; 
-    private bool hideInstructions;
+    private bool deactivateEkey; //Deactivates E key at the end of dialogue
+    public GameObject removeInstructionsCanvas; //canvas for "press R to remove stump"
+    public GameObject plantInstructionsCanvas;//canvas for "move to the tile and press space to plant"
+    private bool hideRemoveInstructions;
     public GameObject stump;
     private float fadeDuration = 2.0f;
     // Start is called before the first frame update
@@ -37,11 +35,14 @@ public class BookInteraction : MonoBehaviour
     
     void Start()
     {
-        spaceTab.SetActive(false);
+        E_key.SetActive(false);
+        
         dialogueCanvas.SetActive(false);
         dialogueSpaceBar.SetActive(false);
         bookPageCanvas.SetActive(false);
         removeInstructionsCanvas.SetActive(false);
+        plantInstructionsCanvas.SetActive(false);
+      
     }
 
     // Update is called once per frame
@@ -49,24 +50,24 @@ public class BookInteraction : MonoBehaviour
     {
         float distance = Vector3.Distance(player.position, book.transform.position);
         if (distance <= activationRadius){
-            if (!deactivateSpaceTab){
-                spaceTab.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.Space) && !dialogueCanvas.activeSelf)
+            if (!deactivateEkey){
+                E_key.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.E) && !dialogueCanvas.activeSelf)
                 {
                     ToggleDialogue();
                 }
             }else{
-                spaceTab.SetActive(false);
-                if (!hideInstructions){
+                E_key.SetActive(false);
+                if (!hideRemoveInstructions){
                     removeInstructionsCanvas.SetActive(true);
                 }else{
                     removeInstructionsCanvas.SetActive(false);
                 }
-
                 RemoveStump();
+               
             }
         }else{
-            spaceTab.SetActive(false);
+            E_key.SetActive(false);
             dialogueCanvas.SetActive(false);
             dialogueSpaceBar.SetActive(false);
         }
@@ -113,17 +114,18 @@ public class BookInteraction : MonoBehaviour
         dialogueSpaceBar.SetActive(false);
         currMessageInd = 0; // Reset to 0 after conversation is over. 
         book.SetActive(false);
-        deactivateSpaceTab = true;
+        deactivateEkey = true;
         player.GetComponent<AnimatedMovement>().setDialogueState(false);
     }
     void RemoveStump(){
         if (Input.GetKeyDown(KeyCode.R)){
             Debug.Log("R pressed, begin removal");
-            hideInstructions = true;
-            StartCoroutine(FadeOut(stump, fadeDuration));
+            hideRemoveInstructions = true;
+            StartCoroutine(FadeOut(stump, fadeDuration, () => {plantInstructionsCanvas.SetActive(true);}));
+
         }
     }
-    IEnumerator FadeOut(GameObject obj, float duration){
+    IEnumerator FadeOut(GameObject obj, float duration, System.Action onComplete = null){
         if (obj != null){
             Renderer renderer = obj.GetComponent<Renderer>();
             if (renderer != null){
@@ -138,6 +140,7 @@ public class BookInteraction : MonoBehaviour
                 }
                 mat.color = new Color(initialColor.r, initialColor.g, initialColor.b, 0); //becomes transparent
                 obj.SetActive(false);
+                if (onComplete != null) onComplete(); //once stump fades out, show instructions to start planting.
             }
         }
     }
