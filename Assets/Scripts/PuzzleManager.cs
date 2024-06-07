@@ -4,6 +4,7 @@ using UnityEngine;
 using GridHandler;
 using UnityEditor;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class PuzzleManager : MonoBehaviour
 {
@@ -14,11 +15,10 @@ public class PuzzleManager : MonoBehaviour
 
     GameObject player;
 
-    GameObject reqCanvas;
+    ReferenceGUI activeGUI;
 
     void Start()
     {
-        reqCanvas = GameObject.Find("ReqCanvas");
 
         foreach (GameObject puzzle in puzzleList)
         {
@@ -46,45 +46,47 @@ public class PuzzleManager : MonoBehaviour
         // Debug.Log(distance);
 
         PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
+        ReferenceGUI g = puzzleDict[closestPuzzle].GetComponent<ReferenceGUI>();
 
-        if (c.plantRequired != "")
+        if (g != null)
         {
-            Transform pinepalm = reqCanvas.transform.Find("pinepalm");
-            Transform pinepalmText = reqCanvas.transform.Find("pinepalmtext");
+            // If we are close enough to the closest puzzle
+            if (distance < 1f + ((c.width + c.height) / 2f * 0.639204f))
+            {
+                if (activeGUI != g)
+                {
+                    if (activeGUI != null)
+                    {
+                        activeGUI.toggleGUI();
+                    }
+                }
 
-            pinepalm.gameObject.SetActive(true);
-            pinepalmText.gameObject.SetActive(true);
-
-            int pinepalmsCurrent = c.countType(c.plantRequired);
-
-            pinepalmText.GetComponent<TMPro.TextMeshProUGUI>().text = pinepalmsCurrent.ToString() + "/" + c.plantRequiredAmount.ToString();
-
+                if (!g.visible)
+                {
+                    g.toggleGUI();
+                    activeGUI = g;
+                }
+            }
+            else
+            {
+                if (g.visible)
+                {
+                    g.toggleGUI();
+                    activeGUI = null;
+                }
+            }
         }
-        else
-        {
-            reqCanvas.transform.Find("pinepalm").gameObject.SetActive(false); 
-            reqCanvas.transform.Find("pinepalmtext").gameObject.SetActive(false);
-        }
 
-        //If the player is close enough to the puzzle, display the requirements
-        if (distance < 1f + ((c.width + c.height) / 2f * 0.639204f))
-        {
 
-            // Display the requirements
-            reqCanvas.SetActive(true);
 
-            int manaRequired = c.manaRequired;
+            
 
-            int manacurrent = c.CalculateMana();
 
-            // set the text of the TMPro object to the plant name
-            reqCanvas.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = manacurrent.ToString() + "/" + manaRequired.ToString();
-        }
-        else
-        {
-            // Hide the requirements
-            reqCanvas.SetActive(false);
-        }
+
+
+
+   
+
     }
 
     public bool Place(string plant)
@@ -96,7 +98,7 @@ public class PuzzleManager : MonoBehaviour
 
         if (closestPuzzle != Vector3.zero)
         {
-            return c.GetComponent<PuzzleGridHandler>().Place(plant);
+            return c.Place(plant);
         }
         else
         {
@@ -111,6 +113,12 @@ public class PuzzleManager : MonoBehaviour
         Vector2 tile = c.PositionToTile(player.transform.position);
 
         return c.GetContent((int)tile.x, (int)tile.y);
+    }
+
+    public bool checkSolved() {
+        PuzzleGridHandler c = puzzleDict[getClosest()].GetComponent<PuzzleGridHandler>();
+
+        return c.isSolved;
     }
 
     private Vector3 getClosest()

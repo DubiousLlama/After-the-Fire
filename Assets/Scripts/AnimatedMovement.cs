@@ -56,7 +56,7 @@ public class AnimatedMovement : MonoBehaviour
             bool isNumber = int.TryParse(Input.inputString, out int number);
             if (isNumber && number > 0 && number < 8) {
                 invManager.ChangeSelectedSlot(number - 1);
-            } else if(Input.GetKeyDown(KeyCode.Space)) {
+            } else if(Input.GetKeyDown(KeyCode.Space) && !invManager.puzzleGrid.checkSolved()) {
                 string plantedPlant = invManager.puzzleGrid.getContent();
                 if(plantedPlant != "out of bounds" && plantedPlant == "soil") {
                     Item item = invManager.GetSelectedItem(false);
@@ -65,7 +65,7 @@ public class AnimatedMovement : MonoBehaviour
                         invManager.GetSelectedItem(true);
                         Debug.Log("Finished calling GetSelectedItem on" + item.name);
                     }
-                } else if (plantedPlant != "out of bounds" && plantedPlant != "soil")
+                } else if (plantedPlant != "out of bounds" && plantedPlant != "soil" && plantedPlant != "infertileSoil")
                 {
                     Item item = invManager.GetSelectedItem(false);
                     if (item != null)
@@ -79,7 +79,7 @@ public class AnimatedMovement : MonoBehaviour
                     }
                     
                 }
-            } else if(Input.GetKeyDown(KeyCode.R)) {
+            } else if(Input.GetKeyDown(KeyCode.R) && !invManager.puzzleGrid.checkSolved()) {
                 string plantedPlant = invManager.puzzleGrid.getContent();
                 if(plantedPlant != "out of bounds" && plantedPlant != "soil") {
                     invManager.puzzleGrid.Place("soil");

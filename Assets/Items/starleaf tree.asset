@@ -17,4 +17,4 @@ MonoBehaviour:
   range: {x: 5, y: 4}
   stackable: 1
   plantName: starleaf tree
-  image: {fileID: 21300000, guid: 9c2be8d39ac77df46beb09b0954a250b, type: 3}
+  image: {fileID: 21300000, guid: a3c1bd5b55cac004b9219b11f561e341, type: 3}
