@@ -516,7 +516,7 @@ PrefabInstance:
     - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
       propertyPath: ambiance.Array.data[1].clip
       value: 
-      objectReference: {fileID: 8300000, guid: a6f3d459594064cce822a8d33037e37c, type: 3}
+      objectReference: {fileID: 8300000, guid: cafaad175949035429f400ffa2ddb1e1, type: 3}
     - target: {fileID: 3695169264824169757, guid: 77a70a40824a0ed418e859ed9b5712ef, type: 3}
       propertyPath: ambiance.Array.data[1].name
       value: Fire Sounds
