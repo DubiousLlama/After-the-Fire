@@ -1,16 +1,18 @@
-using Audio;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Audio;
 
-public class StartMusicTutorial : MonoBehaviour
+public class TriggerStartMusic : MonoBehaviour
 {
     AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        audioManager = AudioManager.instance;
-        audioManager.StartMusicFade("Peaceful");
+        audioManager = FindObjectOfType<AudioManager>();
+
+        audioManager.StartMusicFade("Pensive");
     }
+
 }

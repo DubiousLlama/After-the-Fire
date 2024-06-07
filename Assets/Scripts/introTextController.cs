@@ -76,6 +76,10 @@ public class introTextController : MonoBehaviour
             else if (newSound.soundType == introSoundType.ambiance)
             {
                 audioManager.StartAmbiance(newSound.sound);
+                if (newSound.sound == "Fire Sounds")
+                {
+                    StartCoroutine(increaseFireVolume(0.3f, 1f, 20f));
+                }
             }
             else if (newSound.soundType == introSoundType.sfx)
             {
@@ -111,6 +115,20 @@ public class introTextController : MonoBehaviour
         #endif
 
     }
+
+    private IEnumerator increaseFireVolume(float start, float maximum, float duration)
+    {
+        float currentTime = 0;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioManager.ambianceSource.volume = Mathf.Lerp(start, maximum, currentTime / duration);
+
+            yield return null;
+        }
+    }
+
+
     private introSoundObj GetIntroSound()
     {
         if (introSounds.Length == 0)
