@@ -9,17 +9,20 @@ public class BookInteraction : MonoBehaviour
     public GameObject book;
     public GameObject E_key;
     public float activationRadius = 5.0f; //Radius where spacteTab will apear
-    public GameObject dialogueCanvas; 
+    public GameObject dialogueCanvas;
+    public GameObject bookDialogueCanvas; // Canvas for book dialogue when currMessageInd == 2
     public TMP_Text dialogueText;
+    public TMP_Text bookDialogueText;
     public GameObject bookPageCanvas; 
     //Text info:
     string[] messages = new string[] {
-        "Oh no... The book was damaged during the fire.",
-        "The book contains all the seeds in our forest, it protects us in case anything goes wrong.",
-        "I wonder if it retained its seeds. Let's open it and see...",
+        "The Book must have used all its magic to save us. I should bring it into the village. Maybe someone can restore it.",
+        "The pages are tattered and unreadable. There’s only some text legible:",
+        "Life Begets Life. As plants use their magic to cast spells, they will gift the spirit who planted them with more seeds to plant to continue their spread.",
+        "Tucked behind this page is a single seed to cast a simple spell in times of struggle.",
         "...",
-        "Only one seed survived... The book lost most of its healing properties.",
-        "I need to make more mana to find the missing seeds.",
+        "So using this seed for a spell by planting it should give me more seeds I can use to get out of here. I should be able to plant it right under this stump.",
+        
     };
     private int currMessageInd = 0;
     public float textSpeed = 0.05f; // Speed at which text appears
@@ -38,6 +41,7 @@ public class BookInteraction : MonoBehaviour
         E_key.SetActive(false);
         
         dialogueCanvas.SetActive(false);
+        bookDialogueCanvas.SetActive(false);
         dialogueSpaceBar.SetActive(false);
         bookPageCanvas.SetActive(false);
         removeInstructionsCanvas.SetActive(false);
@@ -88,10 +92,25 @@ public class BookInteraction : MonoBehaviour
     IEnumerator TypeText(string text)
     {
         bookPageCanvas.SetActive(false);
-        dialogueText.text = ""; // Clear existing text
+        dialogueText.text = "";
+        bookDialogueText.text = ""; // Clear existing text
+        if (currMessageInd == 2 || currMessageInd == 3){
+            dialogueCanvas.SetActive(false);
+            bookDialogueCanvas.SetActive(true);
+        }else{
+            dialogueCanvas.SetActive(true);
+            bookDialogueCanvas.SetActive(false);
+        }
         foreach (char letter in text.ToCharArray())
         {
-            dialogueText.text += letter;
+            
+            if (currMessageInd == 2 || currMessageInd == 3){//for book dialogue:
+                bookDialogueText.text += letter;
+            }else{
+                dialogueText.text += letter;
+            }
+            
+            
             yield return new WaitForSeconds(textSpeed); // Wait before showing the next character
         }
         dialogueSpaceBar.SetActive(true);
@@ -99,8 +118,10 @@ public class BookInteraction : MonoBehaviour
         
         if (++currMessageInd >= messages.Length) {
             DeactivateDialogue();
-        }else if (currMessageInd == 3){ //Shows the book page: 
+        
+        }else if (currMessageInd == 4){ //Shows the book page: 
             dialogueCanvas.SetActive(false);
+            bookDialogueCanvas.SetActive(false);
             dialogueSpaceBar.SetActive(false);
             bookPageCanvas.SetActive(true);
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
