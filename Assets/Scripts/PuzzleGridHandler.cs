@@ -64,7 +64,7 @@ namespace GridHandler
         private AudioManager audioManager;
         private InventoryManager inventoryManager;
         private InteractibleGeneric dialogue;
-        private Tilemap tilemap;
+        private TileController tileController;
 
         public bool isSolved = false;
 
@@ -105,7 +105,7 @@ namespace GridHandler
             audioManager = FindObjectOfType<AudioManager>();
             inventoryManager = FindObjectOfType<InventoryManager>();
             dialogue = gameObject.GetComponent<InteractibleGeneric>();
-            tilemap = FindObjectOfType<Tilemap>();
+            tileController = FindObjectOfType<Tilemap>().GetComponent<TileController>();
             if (dialogue != null)
             {
                 dialogue.messages = dialogueMessages;
@@ -118,6 +118,8 @@ namespace GridHandler
             // Check if all requirements are met
             if (!isSolved && CalculateMana() >= manaRequired)
             {
+                Debug.Log(tileController == null);
+                tileController.ActivateGrassPath(regrowArea);
                 if (plantRequired != "")
                 {
                     if (countType(plantRequired) >= plantRequiredAmount)

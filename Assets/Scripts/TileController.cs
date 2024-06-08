@@ -27,9 +27,9 @@ public class TileController : MonoBehaviour
     // 
     void Start()
     {
-        ActivateRiver(totalArea);
+        // ActivateRiver(totalArea);
         // ActivateGrassPath(new BoundsInt(new Vector3Int(-1,-1,0), new Vector3Int(2,2,1)));
-        ActivateGrassPath(totalArea);
+        // ActivateGrassPath(totalArea);
     }
 
     // Update is called once per frame
@@ -57,7 +57,7 @@ public class TileController : MonoBehaviour
 
     public void ActivateGrassPath(BoundsInt area) {
         TileBase[] tileArray = tiles.GetTilesBlock(area);
-
+        Debug.Log("hi kids");
         for(int y = area.y; y < area.yMax; y++) {
             for(int x = area.x; x < area.xMax; x++) {
 
