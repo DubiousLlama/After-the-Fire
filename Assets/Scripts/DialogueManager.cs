@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -12,6 +11,11 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text dialogueText2; // Reference to the second type of dialogue text
 
     public GameObject dialogueSpaceBar; // Reference to the space bar indicator
+
+    void Start()
+    {
+        HideDialogue();
+    }
 
     public void ShowDialogue(string dialogue, int dialogueType)
     {
@@ -38,5 +42,10 @@ public class DialogueManager : MonoBehaviour
         dialogueBox1.SetActive(false);
         dialogueBox2.SetActive(false);
         dialogueSpaceBar.SetActive(false);
+    }
+
+    public void ShowInitialMessage(string message, int dialogueType)
+    {
+        ShowDialogue(message, dialogueType);
     }
 }

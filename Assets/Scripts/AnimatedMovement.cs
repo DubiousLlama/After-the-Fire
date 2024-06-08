@@ -136,7 +136,7 @@ public class AnimatedMovement : MonoBehaviour
         if (castResult.collider) 
         {
             // Stop moving X
-            Debug.Log("stop x movement!");
+            
         }
 
         // Check collision Y
@@ -151,7 +151,7 @@ public class AnimatedMovement : MonoBehaviour
         if (castResult.collider) 
         {
             // Stop moving Y
-            Debug.Log("stop y movement!");
+            
         }
     }
 
