@@ -44,11 +44,11 @@ public class PuzzleManager : MonoBehaviour
         // Get the distance between the player and the closest puzszle
         Vector3 closestPuzzle = getClosest();
 
-        // Get the distance between the player and the closest puzzle
-        float distance = Vector3.Distance(player.transform.position, closestPuzzle);
-        
         PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
         ReferenceGUI g = puzzleDict[closestPuzzle].GetComponent<ReferenceGUI>();
+
+        // Get the distance between the player and the closest puzzle
+        float distance = Vector3.Distance(player.transform.position, closestPuzzle + new Vector3(0.5f * c.width, 0.5f * c.height, 0));
 
         if (g != null)
         {
