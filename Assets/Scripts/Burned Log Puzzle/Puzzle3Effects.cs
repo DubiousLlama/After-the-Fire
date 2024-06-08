@@ -15,6 +15,8 @@ public class Puzzle3Effects : MonoBehaviour
 
     bool effectsHappened = false;
 
+    public bool playAudio = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,11 @@ public class Puzzle3Effects : MonoBehaviour
 
             effectsHappened = true;
 
+            if (playAudio)
+            {
+                // Play the "biglog" sound effect
+                audioManager.TriggerSFX("biglog");
+            }
             StartCoroutine(FadeOut(bigLog.GetComponent<SpriteRenderer>()));
             Invoke("DisableObject", 1.0f);
         }
