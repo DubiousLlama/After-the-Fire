@@ -26,6 +26,8 @@ public class Puzzle4Effects : MonoBehaviour
     {
         if (puzzle.isSolved && !effectsHappened)
         {
+            audioManager.TriggerSFX("river");
+
             // Play the "Playful" music
             audioManager.StartAmbiance("Forest");
             effectsHappened = true;

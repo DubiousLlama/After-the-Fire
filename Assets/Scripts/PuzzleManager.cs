@@ -5,6 +5,7 @@ using GridHandler;
 using UnityEditor;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using System.ComponentModel.Design;
 
 public class PuzzleManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PuzzleManager : MonoBehaviour
     GameObject player;
 
     ReferenceGUI activeGUI;
+
+    bool closetoatleastone = false;
 
     void Start()
     {
@@ -43,8 +46,7 @@ public class PuzzleManager : MonoBehaviour
 
         // Get the distance between the player and the closest puzzle
         float distance = Vector3.Distance(player.transform.position, closestPuzzle);
-        // Debug.Log(distance);
-
+        
         PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
         ReferenceGUI g = puzzleDict[closestPuzzle].GetComponent<ReferenceGUI>();
 
@@ -76,16 +78,7 @@ public class PuzzleManager : MonoBehaviour
                 }
             }
         }
-
-
-
-            
-
-
-
-
-
-   
+      
 
     }
 
