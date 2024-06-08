@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GridHandler;
 
 public class InteractiveObject : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class InteractiveObject : MonoBehaviour
     private int currMessageInd = 0;
     public float textSpeed = 0.05f; // Speed at which text appears
     public GameObject dialogueSpaceBar; // Space bar indicator for dialogue
+    public PuzzleGridHandler puzzleHandler; // Reference to the puzzle handler
+    public bool disableInteractionAfterPuzzleSolved = false; // Flag to disable interaction after puzzle is solved
 
     private DialogueManager dialogueManager;
 
@@ -39,13 +42,18 @@ public class InteractiveObject : MonoBehaviour
 
     void Update()
     {
+        if (disableInteractionAfterPuzzleSolved && puzzleHandler != null && puzzleHandler.isSolved)
+        {
+            if (E_key.gameObject.activeSelf)
+            {
+                E_key.gameObject.SetActive(false);
+            }
+            return; // Skip interaction if the puzzle is solved
+        }
+
         Vector3 playerPosition2D = new Vector3(player.position.x, player.position.y, 0);
         Vector3 interactiveObjectPosition2D = new Vector3(interactiveObject.transform.position.x, interactiveObject.transform.position.y, 0);
         float distance = Vector3.Distance(playerPosition2D, interactiveObjectPosition2D);
-
-        Debug.Log("Distance to player: " + distance);
-        Debug.Log("Player position: " + player.position);
-        Debug.Log("Interactive Object position: " + interactiveObject.transform.position);
 
         if (distance <= activationRadius)
         {
@@ -59,7 +67,6 @@ public class InteractiveObject : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("E key pressed.");
                 ToggleDialogue();
             }
         }
@@ -68,7 +75,6 @@ public class InteractiveObject : MonoBehaviour
             if (E_key.gameObject.activeSelf)
             {
                 E_key.gameObject.SetActive(false);
-                Debug.Log("E_key deactivated.");
             }
         }
     }
@@ -106,7 +112,7 @@ public class InteractiveObject : MonoBehaviour
                 yield return new WaitForSeconds(textSpeed); // Wait before showing the next character
             }
         }
-        
+
         dialogueManager.ShowSpaceBar();
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
 
@@ -126,7 +132,13 @@ public class InteractiveObject : MonoBehaviour
         dialogueSpaceBar.SetActive(false);
         currMessageInd = 0; // Reset to 0 after conversation is over.
         player.GetComponent<AnimatedMovement>().setDialogueState(false);
-        Debug.Log("Dialogue ended.");
+    }
+
+    public void TriggerDialogue(DialogueMessage[] newMessages)
+    {
+        messages = newMessages;
+        currMessageInd = 0;
+        ToggleDialogue();
     }
 
     void OnDrawGizmosSelected()
@@ -134,6 +146,5 @@ public class InteractiveObject : MonoBehaviour
         // Draw a yellow sphere at the transform's position to visualize the activation radius
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(interactiveObject.transform.position, activationRadius);
-        Debug.Log("Drawing Gizmo.");
     }
 }
