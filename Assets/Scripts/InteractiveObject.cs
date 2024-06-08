@@ -37,7 +37,7 @@ public class InteractiveObject : MonoBehaviour
             Debug.LogError("DialogueManager not found in the scene.");
         }
 
-        Debug.Log("InteractiveObject script initialized.");
+        // Debug.Log("InteractiveObject script initialized.");
     }
 
     void Update()

@@ -44,7 +44,7 @@ public class InventoryManager : MonoBehaviour
     }
 
      public bool AddItem(Item item) {
-        //Debug.Log("Adding item: " + item.name);
+        // Debug.Log("Adding item: " + item.name);
         for (int i = 0; i < invSlots.Length; i++) {
             InvSlot slot = invSlots[i];
             // Debug.Log(i);
@@ -54,7 +54,7 @@ public class InventoryManager : MonoBehaviour
                itemInSlot.count < maxStackSize && itemInSlot.item.stackable) {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
-                //Debug.Log("Added item to stack " + i.ToString());
+                // Debug.Log("Added item to stack " + i.ToString());
                 return true;
             }
         }
@@ -65,11 +65,11 @@ public class InventoryManager : MonoBehaviour
 
             if(itemInSlot == null) {
                 SpawnNewItem(item, slot);
-                //Debug.Log("Spawned new in slot " + i.ToString());
+                // Debug.Log("Spawned new in slot " + i.ToString());
                 return true;
             }
         }
-        //Debug.Log("Did nothing");
+        // Debug.Log("Did nothing");
         return false;
     }
 
