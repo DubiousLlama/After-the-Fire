@@ -64,7 +64,6 @@ public class ReferenceGUI : MonoBehaviour
             if (animating)
             {
                 activeRect.anchoredPosition = new Vector2(Mathf.Lerp(activeRect.anchoredPosition.x, animationTarget, 0.07f), 0);
-                Debug.Log("X pos: " + activeRect.anchoredPosition.x.ToString());
                 if (Mathf.Abs(activeRect.anchoredPosition.x - animationTarget) < 20f)
                 {
                     animating = false;
@@ -78,6 +77,40 @@ public class ReferenceGUI : MonoBehaviour
             }
         }
     }
+
+    public void EnableGUI()
+    {
+        if (visible == true)
+        {
+            return;
+        }
+
+        activeCanvas = Instantiate(GUI, new Vector3(0, 0, 0), Quaternion.identity);
+        activeRect = activeCanvas.GetComponent<RectTransform>();
+        activeCanvas.transform.SetParent(canvas.transform, false);
+        activeRect.anchoredPosition = new Vector2(200, 0);
+
+        animating = true;
+        visible = true;
+        animationTarget = -20;
+    }
+
+    public void DisableGUI()
+    {
+        if (activeCanvas == null)
+        {
+            return;
+        }
+        if (visible == false)
+        {
+            return;
+        }
+
+        animating = true;
+        visible = false;
+        animationTarget = 200;
+    }
+
 
     // If the GUI is not active, enable it and have it slide in from the right
     // If the GUI is active, disable it and have it slide out to the right

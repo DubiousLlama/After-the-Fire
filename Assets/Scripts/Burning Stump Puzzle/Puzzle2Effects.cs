@@ -8,8 +8,8 @@ using Audio;
 public class Puzzle2Effects : MonoBehaviour
 {
 
-    public GameObject fireStump;
-    public GameObject regStump;
+    //public GameObject fireStump;
+    //public GameObject regStump;
     public GameObject fireSound;
 
     PuzzleGridHandler puzzle;
@@ -35,8 +35,8 @@ public class Puzzle2Effects : MonoBehaviour
             audioManager.TriggerSFX("Extinguish");
             effectsHappened = true;
 
-            fireStump.SetActive(false);
-            regStump.SetActive(true);
+            //fireStump.SetActive(false);
+            //regStump.SetActive(true);
             fireSound.SetActive(false);
 
         }
