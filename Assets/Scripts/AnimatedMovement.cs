@@ -9,7 +9,6 @@ using JetBrains.Annotations;
 
 public class AnimatedMovement : MonoBehaviour
 {
-
     PuzzleManager gridHandler;
     InventoryManager invManager;
 
@@ -19,14 +18,10 @@ public class AnimatedMovement : MonoBehaviour
 
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
-    public SpriteRenderer spriteRenderer;
-    public Sprite spriteUp;
-    public Sprite spriteDown;
-    public Sprite spriteLeft;
-    public Sprite spriteRight;
+    public Animator animator;  // Using Animator instead of SpriteRenderer
 
-    
     Vector2 movement;
+    Vector2 lastMovement; // Store the last movement direction
 
     void Awake() 
     {
@@ -41,31 +36,55 @@ public class AnimatedMovement : MonoBehaviour
         z_BoxCollider = GetComponent<BoxCollider2D>();
     }
 
-
     // Update is called once per frame
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        
-        if(!inDialogue)
-            UpdateSprite();
 
-        //inventory controls
-        if (!inDialogue && Input.inputString != null) {
+        // Prevent diagonal movement by prioritizing horizontal movement
+        if (movement.x != 0)
+        {
+            movement.y = 0;
+        }
+
+        if (movement.x != 0 || movement.y != 0)
+        {
+            lastMovement = movement; // Update last movement direction
+        }
+
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude);
+
+        if (movement.sqrMagnitude == 0)
+        {
+            animator.SetFloat("LastMoveX", lastMovement.x);
+            animator.SetFloat("LastMoveY", lastMovement.y);
+        }
+
+        // Inventory controls
+        if (!inDialogue && Input.inputString != null)
+        {
             bool isNumber = int.TryParse(Input.inputString, out int number);
-            if (isNumber && number > 0 && number < 8) {
+            if (isNumber && number > 0 && number < 8)
+            {
                 invManager.ChangeSelectedSlot(number - 1);
-            } else if(Input.GetKeyDown(KeyCode.Space) && !invManager.puzzleGrid.checkSolved()) {
+            }
+            else if (Input.GetKeyDown(KeyCode.Space) && !invManager.puzzleGrid.checkSolved())
+            {
                 string plantedPlant = invManager.puzzleGrid.getContent();
-                if(plantedPlant != "out of bounds" && plantedPlant == "soil") {
+                if (plantedPlant != "out of bounds" && plantedPlant == "soil")
+                {
                     Item item = invManager.GetSelectedItem(false);
-                    if (item != null && invManager.puzzleGrid.Place(item.name)) {
+                    if (item != null && invManager.puzzleGrid.Place(item.name))
+                    {
                         Debug.Log("About to call GetSelectedItem to pick up plant " + item.name);
                         invManager.GetSelectedItem(true);
                         Debug.Log("Finished calling GetSelectedItem on" + item.name);
                     }
-                } else if (plantedPlant != "out of bounds" && plantedPlant != "soil" && plantedPlant != "infertileSoil")
+                }
+                else if (plantedPlant != "out of bounds" && plantedPlant != "soil" && plantedPlant != "infertileSoil")
                 {
                     Item item = invManager.GetSelectedItem(false);
                     if (item != null)
@@ -77,53 +96,35 @@ public class AnimatedMovement : MonoBehaviour
                             invManager.AddItem(plantedPlant);
                         }
                     }
-                    
                 }
-            } else if(Input.GetKeyDown(KeyCode.R) && !invManager.puzzleGrid.checkSolved()) {
+            }
+            else if (Input.GetKeyDown(KeyCode.R) && !invManager.puzzleGrid.checkSolved())
+            {
                 string plantedPlant = invManager.puzzleGrid.getContent();
-                if(plantedPlant != "out of bounds" && plantedPlant != "soil") {
+                if (plantedPlant != "out of bounds" && plantedPlant != "soil")
+                {
                     invManager.puzzleGrid.Place("soil");
                     invManager.AddItem(plantedPlant);
                 }
             }
         }
-
-        
     }
 
     void FixedUpdate() 
     {
-        if (!inDialogue) {
+        if (!inDialogue) 
+        {
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
             CheckCollision();
         }
     }
 
-    void UpdateSprite()
+    void CheckCollision() 
     {
-        if (movement.x > 0)
-        {
-            spriteRenderer.sprite = spriteRight;
-        }
-        else if (movement.x < 0)
-        {
-            spriteRenderer.sprite = spriteLeft;
-        }
-        else if (movement.y > 0)
-        {
-            spriteRenderer.sprite = spriteUp;
-        }
-        else if (movement.y < 0)
-        {
-            spriteRenderer.sprite = spriteDown;
-        }
-    }
-
-    void CheckCollision() {
         float moveX = movement.x;
         float moveY = movement.y;
 
-        //check collision X
+        // Check collision X
         RaycastHit2D castResult = Physics2D.BoxCast(transform.position, 
                                                     z_BoxCollider.size, 
                                                     0, 
@@ -132,12 +133,13 @@ public class AnimatedMovement : MonoBehaviour
                                                     LayerMask.GetMask("BlockMove")
         );
 
-        if(castResult.collider) {
-            //stop moving X
+        if (castResult.collider) 
+        {
+            // Stop moving X
             Debug.Log("stop x movement!");
         }
 
-        //check collision Y
+        // Check collision Y
         castResult = Physics2D.BoxCast(transform.position, 
                                                     z_BoxCollider.size, 
                                                     0, 
@@ -146,13 +148,15 @@ public class AnimatedMovement : MonoBehaviour
                                                     LayerMask.GetMask("BlockMove")
         );
 
-        if(castResult.collider) {
-            //stop moving Y
+        if (castResult.collider) 
+        {
+            // Stop moving Y
             Debug.Log("stop y movement!");
         }
     }
 
-    public void setDialogueState(bool state) {
+    public void setDialogueState(bool state) 
+    {
         inDialogue = state;
     }
 
