@@ -78,13 +78,10 @@ public class PuzzleManager : MonoBehaviour
                 }
             }
         }
-      
-
     }
 
     public bool Place(string plant)
     {
-
         Vector3 closestPuzzle = getClosest();
 
         PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
@@ -132,10 +129,6 @@ public class PuzzleManager : MonoBehaviour
                 closestPuzzle = location;
             }
         }
-
         return closestPuzzle;
     }
-
-
-
 }
