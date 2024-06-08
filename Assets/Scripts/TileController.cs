@@ -57,7 +57,7 @@ public class TileController : MonoBehaviour
 
     public void ActivateGrassPath(BoundsInt area) {
         TileBase[] tileArray = tiles.GetTilesBlock(area);
-        Debug.Log("hi kids");
+        Debug.Log("hi kids" + tileArray.Length);
         for(int y = area.y; y < area.yMax; y++) {
             for(int x = area.x; x < area.xMax; x++) {
 

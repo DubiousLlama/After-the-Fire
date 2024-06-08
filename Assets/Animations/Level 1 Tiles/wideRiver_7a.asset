@@ -20,7 +20,7 @@ MonoBehaviour:
   - {fileID: -1255809427, guid: a57a72bd72d91534f8439bc2790832de, type: 3}
   - {fileID: 1060198138, guid: a57a72bd72d91534f8439bc2790832de, type: 3}
   - {fileID: -102517919, guid: a57a72bd72d91534f8439bc2790832de, type: 3}
-  - {fileID: 1104366236, guid: a57a72bd72d91534f8439bc2790832de, type: 3}
+  - {fileID: 75599855, guid: a57a72bd72d91534f8439bc2790832de, type: 3}
   - {fileID: 75599855, guid: a57a72bd72d91534f8439bc2790832de, type: 3}
   m_MinSpeed: 1
   m_MaxSpeed: 1

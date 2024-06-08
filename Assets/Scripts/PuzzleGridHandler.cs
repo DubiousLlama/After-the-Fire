@@ -124,7 +124,6 @@ namespace GridHandler
         {
             if (!isSolved && CalculateMana() >= manaRequired)
             {
-                Debug.Log(tileController == null);
                 tileController.ActivateGrassPath(regrowArea);
                 if (plantRequired != "")
                 {
