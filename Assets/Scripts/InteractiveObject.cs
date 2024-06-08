@@ -37,7 +37,7 @@ public class InteractiveObject : MonoBehaviour
             Debug.LogError("DialogueManager not found in the scene.");
         }
 
-        Debug.Log("InteractiveObject script initialized.");
+        // Debug.Log("InteractiveObject script initialized.");
     }
 
     void Update()
@@ -54,6 +54,10 @@ public class InteractiveObject : MonoBehaviour
         Vector3 playerPosition2D = new Vector3(player.position.x, player.position.y, 0);
         Vector3 interactiveObjectPosition2D = new Vector3(interactiveObject.transform.position.x, interactiveObject.transform.position.y, 0);
         float distance = Vector3.Distance(playerPosition2D, interactiveObjectPosition2D);
+
+        // Debug.Log("Distance to player: " + distance);
+        // Debug.Log("Player position: " + player.position);
+        // Debug.Log("Interactive Object position: " + interactiveObject.transform.position);
 
         if (distance <= activationRadius)
         {

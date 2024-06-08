@@ -17,7 +17,7 @@ public class DisplayManaOnHover : MonoBehaviour
     {
         // Find all the PuzzleGridHandler objects in the scene
         puzzleGridHandlers = FindObjectsOfType<PuzzleGridHandler>();
-        Debug.Log(puzzleGridHandlers.Length);
+        // Debug.Log(puzzleGridHandlers.Length);
     }
 
     // Update is called once per frame

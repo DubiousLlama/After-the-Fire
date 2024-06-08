@@ -18,8 +18,6 @@ public class PuzzleManager : MonoBehaviour
 
     ReferenceGUI activeGUI;
 
-    bool closetoatleastone = false;
-
     void Start()
     {
 
@@ -31,8 +29,8 @@ public class PuzzleManager : MonoBehaviour
             // Add the puzzle to the dictionary
             puzzleDict.Add(puzzlePos, puzzle);
 
-            Debug.Log(puzzle);
-            Debug.Log(puzzlePos);
+            // Debug.Log(puzzle);
+            // Debug.Log(puzzlePos);
         }
 
         // Get the player object
@@ -44,47 +42,52 @@ public class PuzzleManager : MonoBehaviour
         // Get the distance between the player and the closest puzszle
         Vector3 closestPuzzle = getClosest();
 
-        // Get the distance between the player and the closest puzzle
-        float distance = Vector3.Distance(player.transform.position, closestPuzzle);
-        
         PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
         ReferenceGUI g = puzzleDict[closestPuzzle].GetComponent<ReferenceGUI>();
+
+        // Get the distance between the player and the closest puzzle
+        float distance = Vector3.Distance(player.transform.position, closestPuzzle + new Vector3(0.5f * c.width, 0.5f * c.height, 0));
 
         if (g != null)
         {
             // If we are close enough to the closest puzzle
             if (distance < 1f + ((c.width + c.height) / 2f * 0.639204f))
             {
+                // Debug.Log("Close to puzzle + " + puzzleDict[closestPuzzle].name);
                 if (activeGUI != g)
                 {
                     if (activeGUI != null)
                     {
-                        activeGUI.toggleGUI();
+                        // Debug.Log("Switching active GUI");
+                        activeGUI.DisableGUI();
                     }
                 }
 
                 if (!g.visible)
                 {
-                    g.toggleGUI();
+                    // Debug.Log("Making puzzle GUI visible");
+                    g.EnableGUI();
                     activeGUI = g;
                 }
             }
             else
             {
-                if (g.visible)
+                // Debug.Log("Not close to puzzle. Current visibility: " + g.visible.ToString());
+                // Debug.Log("Toggling off visibility");
+                if (activeGUI != null)
                 {
-                    g.toggleGUI();
+                    activeGUI.DisableGUI();
                     activeGUI = null;
                 }
+                
+                g.DisableGUI();
+                
             }
         }
-      
-
     }
 
     public bool Place(string plant)
     {
-
         Vector3 closestPuzzle = getClosest();
 
         PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
@@ -132,10 +135,6 @@ public class PuzzleManager : MonoBehaviour
                 closestPuzzle = location;
             }
         }
-
         return closestPuzzle;
     }
-
-
-
 }

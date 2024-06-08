@@ -27,5 +27,6 @@ public class Puzzle3Setup : MonoBehaviour
         puzzleGridHandler.setTile(1, 1, infertileSoil);
         puzzleGridHandler.setTile(1, 2, infertileSoil);
         puzzleGridHandler.setTile(3, 0, infertileSoil);
+        puzzleGridHandler.setTile(0, 2, infertileSoil);
     }
 }
