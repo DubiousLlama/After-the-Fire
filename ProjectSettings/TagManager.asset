@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Plantable
+  - 2x
+  - infertileSoil
   layers:
   - Default
   - TransparentFX
@@ -12,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - BlockMove
   - 
   - 
   - 
@@ -39,11 +41,11 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Background
     uniqueID: 3931867251
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Interactables
     uniqueID: 1922870147
@@ -53,4 +55,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 1666868067
+    locked: 0
+  - name: UI
+    uniqueID: 3566327243
     locked: 0

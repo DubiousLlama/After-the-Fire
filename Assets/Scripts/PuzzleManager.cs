@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using GridHandler;
 using UnityEditor;
+using UnityEngine.Tilemaps;
+using System.Linq;
+using System.ComponentModel.Design;
 
 public class PuzzleManager : MonoBehaviour
 {
@@ -13,8 +16,13 @@ public class PuzzleManager : MonoBehaviour
 
     GameObject player;
 
+    ReferenceGUI activeGUI;
+
+    bool closetoatleastone = false;
+
     void Start()
     {
+
         foreach (GameObject puzzle in puzzleList)
         {
             // Get the puzzle position
@@ -31,18 +39,79 @@ public class PuzzleManager : MonoBehaviour
         player = GameObject.Find("Player");
     }
 
-    public void Place(string plant)
+    public void Update()
     {
+        // Get the distance between the player and the closest puzszle
         Vector3 closestPuzzle = getClosest();
+
+        // Get the distance between the player and the closest puzzle
+        float distance = Vector3.Distance(player.transform.position, closestPuzzle);
+        
+        PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
+        ReferenceGUI g = puzzleDict[closestPuzzle].GetComponent<ReferenceGUI>();
+
+        if (g != null)
+        {
+            // If we are close enough to the closest puzzle
+            if (distance < 1f + ((c.width + c.height) / 2f * 0.639204f))
+            {
+                if (activeGUI != g)
+                {
+                    if (activeGUI != null)
+                    {
+                        activeGUI.toggleGUI();
+                    }
+                }
+
+                if (!g.visible)
+                {
+                    g.toggleGUI();
+                    activeGUI = g;
+                }
+            }
+            else
+            {
+                if (g.visible)
+                {
+                    g.toggleGUI();
+                    activeGUI = null;
+                }
+            }
+        }
+      
+
+    }
+
+    public bool Place(string plant)
+    {
+
+        Vector3 closestPuzzle = getClosest();
+
+        PuzzleGridHandler c = puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>();
 
         if (closestPuzzle != Vector3.zero)
         {
-            puzzleDict[closestPuzzle].GetComponent<PuzzleGridHandler>().Place(plant);
+            return c.Place(plant);
         }
         else
         {
             Debug.Log("No puzzle found");
+            return false;
         }
+    }
+
+    public string getContent() {
+        PuzzleGridHandler c = puzzleDict[getClosest()].GetComponent<PuzzleGridHandler>();
+
+        Vector2 tile = c.PositionToTile(player.transform.position);
+
+        return c.GetContent((int)tile.x, (int)tile.y);
+    }
+
+    public bool checkSolved() {
+        PuzzleGridHandler c = puzzleDict[getClosest()].GetComponent<PuzzleGridHandler>();
+
+        return c.isSolved;
     }
 
     private Vector3 getClosest()

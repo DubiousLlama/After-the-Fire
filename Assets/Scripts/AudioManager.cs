@@ -14,6 +14,8 @@ namespace Audio
 
         string currentlyPlaying;
 
+        Sound currentAmbiance;
+
         private void Awake()
         {
             if (instance == null)
@@ -29,26 +31,36 @@ namespace Audio
 
         private void Start()
         {
-            StartMusicNow("Pensive");
+            // StartMusicNow("Pensive");
         }
 
         private void Update()
         {
 
             // When the player presses K, start the music "Peaceful" with a fade.Only if the game is running in the editor.
-            if (Input.GetKeyDown(KeyCode.K) && Application.isEditor)
-            {
-                StartMusicFade("Peaceful");
-            }
+            //if (Input.GetKeyDown(KeyCode.K) && Application.isEditor)
+            //{
+            //    StartMusicFade("Peaceful");
+            //}
 
             // Loop the current music and ambiance tracks when they run out
-            if (!musicSource.isPlaying)
+            if (!musicSource.isPlaying && currentlyPlaying != null)
             {
                 StartMusicNow(currentlyPlaying);
+            }
+            if (!ambianceSource.isPlaying && currentAmbiance != null)
+            {
+                StartAmbiance(currentAmbiance.name);
             }
 
             // Keep the AudioManager centered on the player
             transform.position = Camera.main.transform.position;
+
+            if (currentAmbiance != null && !ambianceSource.isPlaying)
+            {
+                ambianceSource.volume = currentAmbiance.volume;
+            }
+            
         }
 
         public void StartMusicNow(string name)
@@ -80,8 +92,10 @@ namespace Audio
             if (ambianceSource.isPlaying)
             {
                 ambianceSource.Stop();
+                currentAmbiance = null;
             }
 
+            currentAmbiance = s;
             ambianceSource.clip = s.clip;
             ambianceSource.volume = s.volume;
             ambianceSource.Play();
@@ -126,7 +140,12 @@ namespace Audio
             StartCoroutine(FadeIn(musicSource, 3f));
         }
 
-        private IEnumerator FadeOut(AudioSource source, float fadeTime)
+        public void FadeOutMusic(float time)
+        {
+            StartCoroutine(FadeOut(musicSource, time, false));
+        }
+
+        private IEnumerator FadeOut(AudioSource source, float fadeTime, bool destroySource=true)
         {
             float startVolume = source.volume;
 
@@ -138,7 +157,11 @@ namespace Audio
 
             source.Stop();
             source.volume = startVolume;
-            Destroy(source);
+            currentlyPlaying = null;
+            if (destroySource)
+            {
+                Destroy(source);
+            }
         }
 
         private IEnumerator FadeIn(AudioSource source, float fadeTime)
