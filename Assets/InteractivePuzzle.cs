@@ -40,7 +40,7 @@ public class InteractivePuzzle : MonoBehaviour
             Debug.LogError("Player not found in the scene.");
         }
 
-        Debug.Log("InteractivePuzzle script initialized.");
+        // Debug.Log("InteractivePuzzle script initialized.");
     }
 
     void Update()

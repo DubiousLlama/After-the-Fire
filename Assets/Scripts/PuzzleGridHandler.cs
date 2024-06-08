@@ -82,7 +82,7 @@ namespace GridHandler
 
         void Start()
         {
-            Debug.Log("PuzzleGridHandler Start called");
+            // Debug.Log("PuzzleGridHandler Start called");
 
             audioManager = FindObjectOfType<AudioManager>();
             if (audioManager == null) Debug.LogError("AudioManager not found");
