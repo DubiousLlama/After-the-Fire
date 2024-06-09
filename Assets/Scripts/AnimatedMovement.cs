@@ -4,7 +4,6 @@ using UnityEngine;
 using GridHandler;
 using System.ComponentModel.Design;
 using System;
-using UnityEditor.UI;
 using JetBrains.Annotations;
 
 public class AnimatedMovement : MonoBehaviour
