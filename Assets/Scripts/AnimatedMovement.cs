@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using GridHandler;
-using System.ComponentModel.Design;
-using System;
-using UnityEditor.UI;
-using JetBrains.Annotations;
+
 
 public class AnimatedMovement : MonoBehaviour
 {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Audio
 {
@@ -27,11 +28,6 @@ namespace Audio
             {
                 Destroy(gameObject);
             }
-        }
-
-        private void Start()
-        {
-            // StartMusicNow("Pensive");
         }
 
         private void Update()
@@ -69,6 +65,11 @@ namespace Audio
 
             currentlyPlaying = name;
 
+            if (musicSource == null)
+            {
+                musicSource = gameObject.AddComponent<AudioSource>();
+            }
+
             if (s == null)
             {
                 Debug.LogWarning("Sound: " + name + " not found!");
@@ -87,6 +88,11 @@ namespace Audio
             {
                 Debug.LogWarning("Sound: " + name + " not found!");
                 return;
+            }
+
+            if (ambianceSource == null)
+            {
+                ambianceSource = gameObject.AddComponent<AudioSource>();
             }
 
             if (ambianceSource.isPlaying)
@@ -111,7 +117,7 @@ namespace Audio
             }
             if (sfxSource == null)
             {
-                Debug.LogWarning("SFX source not found!");
+                sfxSource = gameObject.AddComponent<AudioSource>();
             }
 
             sfxSource.PlayOneShot(s.clip, s.volume);
@@ -123,6 +129,11 @@ namespace Audio
             Sound s = System.Array.Find(music, sound => sound.name == name);
 
             currentlyPlaying = name;
+
+            if (musicSource == null)
+            {
+                musicSource = gameObject.AddComponent<AudioSource>();
+            }
 
             if (s == null)
             {

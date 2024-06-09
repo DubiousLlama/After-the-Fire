@@ -23,7 +23,6 @@ using GridHandler;
 
 namespace GridHandler
 {
-    [ExecuteInEditMode]
     public class PuzzleGridHandler : MonoBehaviour
     {
         [Header("Grid Size")]
@@ -105,7 +104,7 @@ namespace GridHandler
         {
             // Debug.Log("PuzzleGridHandler Start called");
 
-            audioManager = FindObjectOfType<AudioManager>();
+            audioManager = AudioManager.instance;
             if (audioManager == null) Debug.LogError("AudioManager not found");
 
             inventoryManager = FindObjectOfType<InventoryManager>();
