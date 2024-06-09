@@ -152,6 +152,7 @@ namespace GridHandler
                         if (interactivePuzzle != null)
                         {
                             interactivePuzzle.TriggerDialogue();
+                            Debug.Log("Dialogue triggered");
                         }
 
                         isSolved = true;

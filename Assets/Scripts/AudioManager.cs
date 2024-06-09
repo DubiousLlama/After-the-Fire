@@ -109,6 +109,10 @@ namespace Audio
                 Debug.LogWarning("Sound: " + name + " not found!");
                 return;
             }
+            if (sfxSource == null)
+            {
+                Debug.LogWarning("SFX source not found!");
+            }
 
             sfxSource.PlayOneShot(s.clip, s.volume);
         }

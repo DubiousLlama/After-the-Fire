@@ -355,7 +355,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A spell to remove debris.
+  m_text: A spell to tame fire.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4fe5f9b1cb44cab499c7606e7281d4ab, type: 2}
   m_sharedMaterial: {fileID: -3170055471256866857, guid: 4fe5f9b1cb44cab499c7606e7281d4ab, type: 2}
@@ -382,7 +382,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7.85
+  m_fontSize: 9.65
   m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -626,7 +626,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Puzzle Name
+  m_text: Douse
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4fe5f9b1cb44cab499c7606e7281d4ab, type: 2}
   m_sharedMaterial: {fileID: -3170055471256866857, guid: 4fe5f9b1cb44cab499c7606e7281d4ab, type: 2}
@@ -653,14 +653,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.7
+  m_fontSize: 16.9
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 14
   m_fontSizeMax: 24
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -689,7 +689,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 21.347778, y: 10, z: 21.106323, w: 1}
+  m_margin: {x: 21.347778, y: 10, z: 21.106323, w: 14.534515}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

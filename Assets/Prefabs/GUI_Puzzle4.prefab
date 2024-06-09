@@ -440,7 +440,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 12, y: -28.4}
+  m_AnchoredPosition: {x: 12, y: -30.4}
   m_SizeDelta: {x: 150, y: 11.4984}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &5710379297050337589
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A spell to remove debris.
+  m_text: A spell to summon water.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4fe5f9b1cb44cab499c7606e7281d4ab, type: 2}
   m_sharedMaterial: {fileID: -3170055471256866857, guid: 4fe5f9b1cb44cab499c7606e7281d4ab, type: 2}
@@ -498,7 +498,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7.85
+  m_fontSize: 8
   m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1581,7 +1581,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Puzzle Name
+  m_text: Flow
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4fe5f9b1cb44cab499c7606e7281d4ab, type: 2}
   m_sharedMaterial: {fileID: -3170055471256866857, guid: 4fe5f9b1cb44cab499c7606e7281d4ab, type: 2}
@@ -1608,14 +1608,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.7
+  m_fontSize: 18.15
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 14
   m_fontSizeMax: 24
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1644,7 +1644,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 21.347778, y: 10, z: 21.106323, w: 1}
+  m_margin: {x: 21.347778, y: 10, z: 21.106323, w: 13.577972}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

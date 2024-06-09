@@ -69,7 +69,10 @@ public class ReferenceGUI : MonoBehaviour
                     animating = false;
                     if (animationTarget == 200)
                     {
-                        Destroy(activeCanvas);
+                        if (activeCanvas != null)
+                        {
+                            Destroy(activeCanvas);
+                        }
                         activeCanvas = null;
                         activeRect = null;
                     }
@@ -109,6 +112,8 @@ public class ReferenceGUI : MonoBehaviour
         animating = true;
         visible = false;
         animationTarget = 200;
+
+        Destroy(activeCanvas, 2f);
     }
 
 

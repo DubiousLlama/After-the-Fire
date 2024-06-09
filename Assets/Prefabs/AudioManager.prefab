@@ -213,6 +213,15 @@ MonoBehaviour:
   - name: Extinguish
     clip: {fileID: 8300000, guid: 0ca64a4fee13a514dba79a3b85230d15, type: 3}
     volume: 0.28
+  - name: biglog
+    clip: {fileID: 8300000, guid: 61530d8d1b646d641825357866f12d96, type: 3}
+    volume: 0.734
+  - name: river
+    clip: {fileID: 8300000, guid: f577d1c6fed37d14487197a5202cc3d9, type: 3}
+    volume: 0.4
+  - name: vines
+    clip: {fileID: 8300000, guid: 6708bf9a02ba32444b976437867ef1ad, type: 3}
+    volume: 0.4
   ambiance:
   - name: Forest
     clip: {fileID: 8300000, guid: 10e532f9d6c0759458c721d9b4fb364a, type: 3}
