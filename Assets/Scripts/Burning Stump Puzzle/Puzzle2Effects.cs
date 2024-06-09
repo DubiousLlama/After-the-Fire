@@ -38,7 +38,9 @@ public class Puzzle2Effects : MonoBehaviour
             //fireStump.SetActive(false);
             //regStump.SetActive(true);
             fireSound.SetActive(false);
-
+            foreach(GameObject bush in GameObject.FindGameObjectsWithTag("burningBush")) {
+                bush.GetComponent<Animator>().SetBool("puzzleComplete", true);
+            }
         }
     }
 }

@@ -66,6 +66,7 @@ namespace GridHandler
         private InventoryManager inventoryManager;
         private InteractibleGeneric dialogue;
         private TileController tileController;
+        private NaturalForest forest;
         private DialogueManager dialogueManager;
 
         private InteractivePuzzle interactivePuzzle; // Reference to InteractivePuzzle script
@@ -111,20 +112,29 @@ namespace GridHandler
             if (inventoryManager == null) Debug.LogError("InventoryManager not found");
 
             dialogue = gameObject.GetComponent<InteractibleGeneric>();
-            tileController = FindObjectOfType<Tilemap>().GetComponent<TileController>();
             if (dialogue == null) Debug.LogError("InteractibleGeneric not found");
 
             dialogueManager = FindObjectOfType<DialogueManager>();
+            Tilemap t = FindObjectOfType<Tilemap>();
+            if (t != null)
+                tileController = t.GetComponent<TileController>();
+            
+
+            forest = FindObjectOfType<NaturalForest>();
 
             interactivePuzzle = gameObject.GetComponent<InteractivePuzzle>();
-            if (interactivePuzzle == null) Debug.LogError("InteractivePuzzle not found");
+            //if (interactivePuzzle == null) Debug.LogError("InteractivePuzzle not found");
         }
 
         void Update()
         {
             if (!isSolved && CalculateMana() >= manaRequired)
             {
-                tileController.ActivateGrassPath(regrowArea);
+                if(tileController != null)
+                    tileController.ActivateGrassPath(regrowArea);
+                if(forest != null)
+                    forest.ActivateTrees(regrowArea);
+
                 if (plantRequired != "")
                 {
                     if (countType(plantRequired) >= plantRequiredAmount)
@@ -186,6 +196,7 @@ namespace GridHandler
             Destroy(tiles[y, x]);
             tiles[y, x] = Instantiate(tile, this.transform);
             tiles[y, x].transform.position = new Vector3(this.transform.position.x + x * tileSize, this.transform.position.y + y * tileSize, 0);
+            // tiles[y, x].GetComponent<SpriteRenderer>().sortingLayerID = SortingLayer.NameToID("Background");
 
             if (tile.tag == "infertileSoil")
             {

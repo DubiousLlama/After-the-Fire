@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using UnityEngine;
 using Audio;
+using UnityEngine.Tilemaps;
 
 public class Puzzle4Effects : MonoBehaviour
 {
 
     PuzzleGridHandler puzzle;
     AudioManager audioManager;
+    TileController tileController;
 
     bool effectsHappened = false;
 
@@ -19,6 +21,8 @@ public class Puzzle4Effects : MonoBehaviour
         // Get the PuzzleGridHandler component
         puzzle = gameObject.GetComponent<PuzzleGridHandler>();
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        tileController = FindObjectOfType<Tilemap>().GetComponent<TileController>();
+
     }
 
     // Update is called once per frame
@@ -31,6 +35,7 @@ public class Puzzle4Effects : MonoBehaviour
             // Play the "Playful" music
             audioManager.StartAmbiance("Forest");
             effectsHappened = true;
+            StartCoroutine(tileController.ActivateRiver());
         }
     }
 }

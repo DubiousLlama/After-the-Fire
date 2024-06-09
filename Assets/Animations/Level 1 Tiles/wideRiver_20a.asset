@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: wideRiver_20a
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 1669912896, guid: dce9503eedbaa1d4da12d02635045590, type: 3}
   - {fileID: -839527259, guid: dce9503eedbaa1d4da12d02635045590, type: 3}
   - {fileID: 491382466, guid: dce9503eedbaa1d4da12d02635045590, type: 3}
   - {fileID: 1563845761, guid: dce9503eedbaa1d4da12d02635045590, type: 3}
@@ -22,8 +21,9 @@ MonoBehaviour:
   - {fileID: 534979736, guid: dce9503eedbaa1d4da12d02635045590, type: 3}
   - {fileID: -790744929, guid: dce9503eedbaa1d4da12d02635045590, type: 3}
   - {fileID: -1237804147, guid: dce9503eedbaa1d4da12d02635045590, type: 3}
+  - {fileID: 1669912896, guid: dce9503eedbaa1d4da12d02635045590, type: 3}
   m_MinSpeed: 1
   m_MaxSpeed: 1
   m_AnimationStartTime: 0
-  m_AnimationStartFrame: 0
+  m_AnimationStartFrame: 9
   m_TileColliderType: 0

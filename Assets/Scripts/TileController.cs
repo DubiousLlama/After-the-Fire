@@ -30,6 +30,7 @@ public class TileController : MonoBehaviour
         // ActivateRiver(totalArea);
         // ActivateGrassPath(new BoundsInt(new Vector3Int(-1,-1,0), new Vector3Int(2,2,1)));
         // ActivateGrassPath(totalArea);
+        // StartCoroutine(ActivateRiver());
     }
 
     // Update is called once per frame
@@ -38,13 +39,29 @@ public class TileController : MonoBehaviour
         
     }
 
-    public void ActivateRiver(BoundsInt area) {
-        TileBase[] tileArray = tiles.GetTilesBlock(area);
+    public IEnumerator ActivateRiver() 
+    {
+        TileBase[] tileArray = tiles.GetTilesBlock(totalArea);
 
-        for(int y = area.y; y < area.yMax; y++) {
-            for(int x = area.x; x < area.xMax; x++) {
+        for(int y = totalArea.y; y < totalArea.yMax; y++) {
+            for(int x = totalArea.x; x < totalArea.xMax; x++) {
                 
-                string newTile = tileArray[PointToIndex(area, x,y)].name + "a";
+                string newTile = tileArray[PointToIndex(totalArea, x,y)].name + "a";
+                Debug.Log("is it working");
+                if(aTile.ContainsKey(newTile)) {
+                    tiles.SetTile(new Vector3Int(x, y), aTile[newTile]);
+                }
+                // Debug.Log(aTile[tileArray[x + 2*y].name + "a"]);
+                // Debug.Log(string.Format("x:{0} y:{1} idx:{2}", x, y, PointToIndex(x,y)));
+            }
+        }
+
+        yield return new WaitForSeconds(8);
+
+        for(int y = totalArea.y; y < totalArea.yMax; y++) {
+            for(int x = totalArea.x; x < totalArea.xMax; x++) {
+                
+                string newTile = tileArray[PointToIndex(totalArea, x,y)].name + "ab";
 
                 if(aTile.ContainsKey(newTile))
                     tiles.SetTile(new Vector3Int(x, y), aTile[newTile]);

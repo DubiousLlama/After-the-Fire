@@ -31,6 +31,7 @@ public class Puzzle1Effects : MonoBehaviour
             audioManager.StartMusicFade("Playful");
             fountainSound.SetActive(true);
             effectsHappened = true;
+            GameObject.Find("birdbath").GetComponent<Animator>().SetBool("puzzleComplete", true);
         }
     }
 }
