@@ -20,7 +20,7 @@ public class MoveToLevelOne : MonoBehaviour
         Debug.Log("Collision detected");
         if (collision.gameObject.tag == "Player" && !vine_wall.activeSelf && !movementScript.getDialogueState())
         {
-            sceneFader.FadeToScene("Level One");
+            sceneFader.FadeToScene("Level 1 (New Layout)");
         }
     }
 }

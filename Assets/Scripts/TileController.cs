@@ -56,7 +56,7 @@ public class TileController : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(7);
 
         for(int y = totalArea.y; y < totalArea.yMax; y++) {
             for(int x = totalArea.x; x < totalArea.xMax; x++) {

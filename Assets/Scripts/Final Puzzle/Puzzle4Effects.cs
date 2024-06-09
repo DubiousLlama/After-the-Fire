@@ -36,6 +36,7 @@ public class Puzzle4Effects : MonoBehaviour
             audioManager.StartAmbiance("Forest");
             effectsHappened = true;
             StartCoroutine(tileController.ActivateRiver());
+            GameObject.Find("UnderBridge").SetActive(false);
         }
     }
 }

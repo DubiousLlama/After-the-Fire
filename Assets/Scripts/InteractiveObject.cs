@@ -76,10 +76,10 @@ public class InteractiveObject : MonoBehaviour
         }
         else
         {
-            if (E_key.gameObject.activeSelf)
-            {
+            // if (E_key.gameObject.activeSelf)
+            // {
                 E_key.gameObject.SetActive(false);
-            }
+            // }
         }
     }
 
