@@ -4506,6 +4506,7 @@ GameObject:
   - component: {fileID: 759250490}
   - component: {fileID: 759250491}
   - component: {fileID: 759250492}
+  - component: {fileID: 759250493}
   m_Layer: 0
   m_Name: Puzzle Grid Handler
   m_TagString: Untagged
@@ -4636,6 +4637,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GUI: {fileID: 4291851337382068389, guid: 3a58a17b0cb07bf4aaa925a1847aa96b, type: 3}
   visible: 0
+--- !u!114 &759250493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759250486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6123f527f6215446387eac044c2bc713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messages:
+  - message: "The book lit up: \u201CThis tome\u2019s power depends on the health
+      of the forest. In times of strife \u2013 \u201C"
+    dialogueType: 1
+  - message: The rest is too faded to read.
+    dialogueType: 1
+  - message: "I should see the fire\u2019s aftermath. If the book is this damaged,
+      it might mean the forest is struggling to survive."
+    dialogueType: 1
+  textSpeed: 0.01
 --- !u!1 &771691053
 GameObject:
   m_ObjectHideFlags: 0

@@ -7288,10 +7288,10 @@ MonoBehaviour:
       in the Book:'
     dialogueType: 1
   - message: 'Plants cannot move once they have found power through spirit magic. '
-    dialogueType: 1
+    dialogueType: 2
   - message: The magic courses through them to produce offspring for greater magic
       once they are permanently rooted in place.
-    dialogueType: 1
+    dialogueType: 2
   textSpeed: 0.02
 --- !u!4 &287461250 stripped
 Transform:
@@ -16980,6 +16980,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1377410011}
   m_CullTransparentMesh: 1
+--- !u!1 &1381399832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7926999905657033816, guid: 1e39341a7dbaac24d8ea6ee6c3fb872b, type: 3}
+  m_PrefabInstance: {fileID: 7585206456198285511}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1401604485 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9169542478475010095, guid: 155a201483632f34a98f0a02b5b94a3f, type: 3}
@@ -21169,7 +21174,7 @@ PrefabInstance:
     - target: {fileID: 2167345506023650164, guid: 04977b6b476294e20b19cdc89c755274, type: 3}
       propertyPath: dialogueBox2
       value: 
-      objectReference: {fileID: 541355879}
+      objectReference: {fileID: 1381399832}
     - target: {fileID: 2167345506023650164, guid: 04977b6b476294e20b19cdc89c755274, type: 3}
       propertyPath: dialogueText1
       value: 
@@ -24113,6 +24118,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5480313510097763604, guid: 1e39341a7dbaac24d8ea6ee6c3fb872b, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7926999905657033816, guid: 1e39341a7dbaac24d8ea6ee6c3fb872b, type: 3}
       propertyPath: m_Name
       value: BookDialogueCanvas
